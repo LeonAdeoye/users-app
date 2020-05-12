@@ -147,7 +147,7 @@ export class User
       jsonConverter.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL;
       return jsonConverter.deserializeObject(jsonObject, User);
     }
-    catch(err)
+    catch (err)
     {
       throw new Error(`Error occurred while serializing object: ${JSON.stringify(jsonObject)}`);
     }
