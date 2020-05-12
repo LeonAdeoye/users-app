@@ -1,5 +1,4 @@
 import { JsonConvert, JsonObject, JsonProperty, ValueCheckingMode } from "json2typescript";
-import { UtilityService } from "../services/utility.service";
 
 @JsonObject
 export class Usage
@@ -46,7 +45,7 @@ export class Usage
       action: this.action,
       lastUsageDate: this.lastUsageDate,
       monthlyCount: this.monthlyCount
-    }
+    };
   }
 
   public get id(): string
@@ -94,9 +93,9 @@ export class Usage
     return this._lastUsageDate;
   }
 
-  public set lastUsageDate(action: string)
+  public set lastUsageDate(lastUsageDate: string)
   {
-    this._lastUsageDate = action;
+    this._lastUsageDate = lastUsageDate;
   }
 
   public get monthlyCount(): Array<string>
@@ -113,7 +112,7 @@ export class Usage
   {
     try
     {
-      let jsonConverter: JsonConvert = new JsonConvert();
+      const jsonConverter: JsonConvert = new JsonConvert();
       jsonConverter.ignorePrimitiveChecks = false;
       jsonConverter.actionCheckingMode = ValueCheckingMode.DISALLOW_NULL;
       return jsonConverter.deserializeObject(jsonObject, Usage);
@@ -128,7 +127,7 @@ export class Usage
   {
     try
     {
-      let jsonConverter: JsonConvert = new JsonConvert();
+      const jsonConverter: JsonConvert = new JsonConvert();
       jsonConverter.ignorePrimitiveChecks = false;
       jsonConverter.actionCheckingMode = ValueCheckingMode.DISALLOW_NULL;
       return jsonConverter.deserializeArray(jsonObjectArray, Usage);
