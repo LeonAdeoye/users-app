@@ -144,7 +144,7 @@ export class User
     {
       const jsonConverter: JsonConvert = new JsonConvert();
       jsonConverter.ignorePrimitiveChecks = false;
-      jsonConverter.deskNameCheckingMode = ValueCheckingMode.DISALLOW_NULL;
+      jsonConverter.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL;
       return jsonConverter.deserializeObject(jsonObject, User);
     }
     catch(err)
@@ -159,7 +159,7 @@ export class User
     {
       const jsonConverter: JsonConvert = new JsonConvert();
       jsonConverter.ignorePrimitiveChecks = false;
-      jsonConverter.deskNameCheckingMode = ValueCheckingMode.DISALLOW_NULL;
+      jsonConverter.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL;
       return jsonConverter.deserializeArray(jsonObjectArray, User);
     }
     catch(err)
