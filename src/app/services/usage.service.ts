@@ -30,7 +30,7 @@ export class UsageService
 
   public saveUsage(action: string): void
   {
-
+    this.log(`Saving usage action: ${action}`, LogLevel.DEBUG);
     const url = `${this.usersServiceURLBase}/usage?app=${Constants.APP_NAME}&user=${this.configurationService.getCurrentUser()}&action=${action}`;
     this.messageService.send(new Message(url, null, MessageTransport.HTTP, MessageMethod.POST)).subscribe(
       (result) =>
@@ -54,8 +54,7 @@ export class UsageService
         try
         {
           this.usageList = Usage.deserializeArray(usage);
-          this.log(`Retrieved ${usage.length} users from the users micro-service.`, LogLevel.INFO);
-          this.log(`Usage details: ${JSON.stringify(usage)}`, LogLevel.INFO);
+          this.log(`Retrieved ${usage.length} usage from the users micro-service.`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
         catch(err)
