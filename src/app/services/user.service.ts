@@ -3,10 +3,10 @@ import { LoggingService } from "./logging.service";
 import { MessageService } from "./message.service";
 import { LogLevel, MessageMethod, MessageTransport, ServiceUpdate } from "../models/types";
 import { Message } from "../models/message";
-import { Constants } from "../models/constants";
 import { Subject } from "rxjs";
 import { UtilityService } from "./utility.service";
 import { User } from "../models/user";
+import { ConfigurationService } from "./configuration.service";
 
 @Injectable({
   providedIn: "root"
@@ -15,9 +15,11 @@ export class UserService
 {
   private users = Array<User>();
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
+  private readonly configurationServiceURLBase: string;
 
-  constructor(private loggingService: LoggingService, private messageService: MessageService)
+  constructor(private loggingService: LoggingService, private messageService: MessageService, private configurationService: ConfigurationService)
   {
+    this.configurationServiceURLBase = this.configurationService.getConfigurationValue("system", "users-service.url", "http://localhost:20003");
   }
 
   private log(message: string, logLevel?: LogLevel): void
@@ -27,7 +29,7 @@ export class UserService
 
   public loadAllUsers(): void
   {
-    const message = new Message(`${Constants.USERS_SERVICE_URL_BASE}/users`, null, MessageTransport.HTTP, MessageMethod.GET);
+    const message = new Message(`${this.configurationServiceURLBase}/users`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((users) =>
     {
         try
@@ -56,7 +58,8 @@ export class UserService
 
   public invalidateUser(userId: string): void
   {
-    const message = new Message(`${Constants.USERS_SERVICE_URL_BASE}/user?userId=${userId}`, null, MessageTransport.HTTP, MessageMethod.DELETE);
+    this.log(`Invalidating user with user Id: ${userId}`, LogLevel.DEBUG);
+    const message = new Message(`${this.configurationServiceURLBase}/user?userId=${userId}`, null, MessageTransport.HTTP, MessageMethod.DELETE);
     this.messageService.send(message).subscribe(
       (result) =>
       {
@@ -73,9 +76,8 @@ export class UserService
 
   public saveUser(user: User): void
   {
-
-    this.log(`Saving ${user}`, LogLevel.DEBUG);
-    const message = new Message(`${Constants.USERS_SERVICE_URL_BASE}/user`, user.toJSON(), MessageTransport.HTTP, UtilityService.isNullOrEmptyOrBlankOrUndefined(user.userId) ? MessageMethod.POST : MessageMethod.PUT);
+    this.log(`Saving user: ${user}`, LogLevel.DEBUG);
+    const message = new Message(`${this.configurationServiceURLBase}/user`, user.toJSON(), MessageTransport.HTTP, UtilityService.isNullOrEmptyOrBlankOrUndefined(user.userId) ? MessageMethod.POST : MessageMethod.PUT);
 
     this.messageService.send(message).subscribe(
       (result) =>
