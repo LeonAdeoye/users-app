@@ -51,7 +51,7 @@ export class UserService
     });
   }
 
-  public getAllConfigurations(): Array<User>
+  public getAllUsers(): Array<User>
   {
     return this.users;
   }
