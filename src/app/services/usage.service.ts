@@ -68,4 +68,9 @@ export class UsageService
           this.log(`${error.message}`, LogLevel.ERROR);
       });
   }
+
+  public getAllUsage(): Array<Usage>
+  {
+    return new Array<Usage>();
+  }
 }

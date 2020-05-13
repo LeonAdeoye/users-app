@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { GridSearchService } from "../../services/grid-search.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { IpcRenderer } from "electron";
@@ -6,9 +6,9 @@ import { LogLevel } from "../../models/types";
 import { LoggingService } from "../../services/logging.service";
 
 @Component({
-  selector: 'app-main-header',
-  templateUrl: './main-header.component.html',
-  styleUrls: ['./main-header.component.sass']
+  selector: "app-main-header",
+  templateUrl: "./main-header.component.html",
+  styleUrls: ["./main-header.component.sass"]
 })
 export class MainHeaderComponent implements OnInit
 {
@@ -17,8 +17,8 @@ export class MainHeaderComponent implements OnInit
 
   constructor(private gridSearchService: GridSearchService, private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
-    if ((<any>window).require)
-      this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
+    if ((window as any).require)
+      this.ipcRenderer = (window as any).require("electron").ipcRenderer;
     else
       this.log("Unable to create IPC renderer in Main Header component.", LogLevel.DEBUG);
   }
@@ -46,24 +46,19 @@ export class MainHeaderComponent implements OnInit
   public closeWindow(): void
   {
     this.log("Sending command request to close the app.", LogLevel.INFO);
-    this.ipcRenderer.send('command-signal', 'close-app-command');
+    this.ipcRenderer.send("command-signal", "close-app-command");
   }
 
   public minimizeWindow(): void
   {
     this.log("Sending command request to minimize the app.", LogLevel.INFO);
-    this.ipcRenderer.send('command-signal', 'minimize-app-command');
-  }
-
-  public addConfiguration(): void
-  {
-    this.configurationService.addConfigurationSubject.next();
+    this.ipcRenderer.send("command-signal", "minimize-app-command");
   }
 
   public toggleWindowMaximization(): void
   {
     this.log("Sending command request to maximize the app.", LogLevel.INFO);
-    this.ipcRenderer.send('command-signal', 'toggle-maximization-command');
+    this.ipcRenderer.send("command-signal", "toggle-maximization-command");
   }
 
   private log(message: string, logLevel?: LogLevel): void
