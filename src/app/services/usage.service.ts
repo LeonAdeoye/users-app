@@ -45,9 +45,10 @@ export class UsageService
       });
   }
 
-  public loadAllUsage(): void
+  public loadUsage(app: string, user: string): void
   {
-    const message = new Message(`${this.usersServiceURLBase}/usage`, null, MessageTransport.HTTP, MessageMethod.GET);
+    const params = (user === null ? `app=${app}` : `?app=${app}&user=${user}`);
+    const message = new Message(`${this.usersServiceURLBase}/usage?${params}`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((usage) =>
       {
         try

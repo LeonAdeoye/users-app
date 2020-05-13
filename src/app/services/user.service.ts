@@ -39,14 +39,14 @@ export class UserService
           this.log(`Users details: ${JSON.stringify(users)}`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
-        catch(err)
+        catch (err)
         {
           this.log(err.message, LogLevel.ERROR);
         }
     },
     (error) =>
     {
-      if(error)
+      if (error)
         this.log(`${error.message}`, LogLevel.ERROR);
     });
   }
@@ -63,13 +63,13 @@ export class UserService
     this.messageService.send(message).subscribe(
       (result) =>
       {
-        if(result)
+        if (result)
           this.log(`result: ${result}`, LogLevel.DEBUG);
         this.loadAllUsers();
       },
       (error) =>
       {
-        if(error)
+        if (error)
           this.log(`${error.message}`, LogLevel.ERROR);
       });
   }
@@ -96,11 +96,10 @@ export class UserService
 
   getConfigurationValue(userId: string): User
   {
-    for (let index = 0; index < this.users.length; ++index)
-    {
-      if (this.users[index].userId === userId)
+    for(let index = 0; index < this.users.length; ++index)
+      if(this.users[index].userId === userId)
         return this.users[index];
-    }
+
     return null;
   }
 }

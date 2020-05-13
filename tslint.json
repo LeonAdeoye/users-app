@@ -9,6 +9,7 @@
     "component-class-suffix": true,
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
+    "curly": [true, "as-needed"],
     "directive-selector": [
       true,
       "attribute",
@@ -109,6 +110,5 @@
       "property-declaration": "onespace",
       "variable-declaration": "onespace"
     }
-  ],
-  "curly": [true, "as-needed"]
+  ]
 }
