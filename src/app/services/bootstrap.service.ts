@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { LogLevel } from "../models/types";
 import { LoggingService } from "./logging.service";
 import { IpcRenderer } from "electron";
@@ -7,31 +7,31 @@ import { Constants } from "../models/constants";
 import { UsageService } from "./usage.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class BootstrapService
 {
   private ipcRenderer: IpcRenderer;
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private usageService:UsageService)
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private usageService: UsageService)
   {
     this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
     loggingService.initialize(Constants.APP_NAME, this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
-    this.usageService.usage("launched configuration app");
+    this.usageService.saveUsage("launched configuration app");
 
-    if ((<any>window).require)
+    if ((window as any).require)
     {
       try
       {
-        this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
+        this.ipcRenderer = (window as any).require("electron").ipcRenderer;
         this.log("Successfully created IPC renderer in Bootstrap service. Service is now ready to receive signals.", LogLevel.DEBUG);
 
         // This listener is invoked only ONCE after which it is removed.
-        this.ipcRenderer.once('browser-ready-signal', () =>
+        this.ipcRenderer.once("browser-ready-signal", () =>
         {
           this.configurationService.loadAllConfigurations();
-        })
+        });
       }
       catch (e)
       {

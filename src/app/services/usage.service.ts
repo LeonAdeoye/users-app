@@ -28,7 +28,7 @@ export class UsageService
     this.loggingService.log("UsageService", message, logLevel);
   }
 
-  public usage(action: string): void
+  public saveUsage(action: string): void
   {
 
     const url = `${this.configurationServiceURLBase}/usage?app=${Constants.APP_NAME}&user=${this.configurationService.getCurrentUser()}&action=${action}`;
