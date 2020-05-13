@@ -99,5 +99,16 @@
   },
   "rulesDirectory": [
     "codelyzer"
-  ]
+  ],
+  "typedef-whitespace": [
+    true,
+    {
+      "call-signature": "onespace",
+      "index-signature": "onespace",
+      "parameter": "onespace",
+      "property-declaration": "onespace",
+      "variable-declaration": "onespace"
+    }
+  ],
+  "curly": [true, "as-needed"]
 }
