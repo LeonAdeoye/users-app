@@ -16,11 +16,11 @@ export class UsageService
 {
   private usageList = Array<Usage>();
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
-  private readonly configurationServiceURLBase: string;
+  private readonly usersServiceURLBase: string;
 
   constructor(private messageService: MessageService, private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
-    this.configurationServiceURLBase = this.configurationService.getConfigurationValue("system", "users-service.url", "http://localhost:20003");
+    this.usersServiceURLBase = this.configurationService.getConfigurationValue("system", "users-service.url", "http://localhost:20003");
   }
 
   private log(message: string, logLevel?: LogLevel): void
@@ -31,7 +31,7 @@ export class UsageService
   public saveUsage(action: string): void
   {
 
-    const url = `${this.configurationServiceURLBase}/usage?app=${Constants.APP_NAME}&user=${this.configurationService.getCurrentUser()}&action=${action}`;
+    const url = `${this.usersServiceURLBase}/usage?app=${Constants.APP_NAME}&user=${this.configurationService.getCurrentUser()}&action=${action}`;
     this.messageService.send(new Message(url, null, MessageTransport.HTTP, MessageMethod.POST)).subscribe(
       (result) =>
       {
@@ -45,9 +45,9 @@ export class UsageService
       });
   }
 
-  public loadAllUsages(): void
+  public loadAllUsage(): void
   {
-    const message = new Message(`${this.configurationServiceURLBase}/usage`, null, MessageTransport.HTTP, MessageMethod.GET);
+    const message = new Message(`${this.usersServiceURLBase}/usage`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((usage) =>
       {
         try

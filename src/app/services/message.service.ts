@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { LogLevel, MessageTransport } from "../models/types";
 import { LoggingService } from "./logging.service";
 import { Message } from "../models/message";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MessageService
 {
@@ -18,16 +18,16 @@ export class MessageService
     this.loggingService.log("MessageService", message, logLevel);
   }
 
-  public send(message: Message) : any
+  public send(message: Message): any
   {
     switch(message.getTransport())
     {
       case MessageTransport.HTTP:
-        let messageOptions: any =
+        const messageOptions: any =
         {
           headers: new HttpHeaders(
   {
-            'Content-Type':  'application/json'
+            "Content-Type":  "application/json"
           })
         };
         if(message.getPayload())

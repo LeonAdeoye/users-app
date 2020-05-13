@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UtilityService
 {
   constructor() { }
 
-  public static isNullOrEmptyOrBlankOrUndefined(value: String): boolean
+  public static isNullOrEmptyOrBlankOrUndefined(value: string): boolean
   {
     return !UtilityService.isNotNullOrEmptyOrBlankOrUndefined(value);
   }
 
-  public static isNotNullOrEmptyOrBlankOrUndefined(value: String): boolean
+  public static isNotNullOrEmptyOrBlankOrUndefined(value: string): boolean
   {
     return Boolean(value && value.trim() !== "");
   }
