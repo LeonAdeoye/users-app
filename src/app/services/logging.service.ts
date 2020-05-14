@@ -39,7 +39,6 @@ export class LoggingService
       return;
 
     const messageToLog = `[${this.loggerUserId}@${source}]=>${this.truncate(message)}`;
-    console.log(messageToLog);
 
     switch(logLevel)
     {

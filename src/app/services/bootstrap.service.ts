@@ -18,7 +18,7 @@ export class BootstrapService
   {
     this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
     loggingService.initialize(Constants.APP_NAME, this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
-    this.usageService.saveUsage("launched configuration app");
+    this.usageService.saveUsage("launched users app");
 
     if ((window as any).require)
     {
