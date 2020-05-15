@@ -14,7 +14,9 @@ import { Usage } from "../models/usage";
 })
 export class UsageService
 {
-  private usageList = Array<Usage>();
+  private usageList = new Array<Usage>();
+  private usageAppList = new Array<string>();
+
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;
 
@@ -37,6 +39,22 @@ export class UsageService
       {
         if(result)
           this.log(`Successfully saved usage: ${JSON.stringify(result)}`, LogLevel.DEBUG);
+      },
+      (error) =>
+      {
+        if(error)
+          this.log(`${error.message}`, LogLevel.ERROR);
+      });
+  }
+
+  public loadAllUsageApps(): void
+  {
+    const message = new Message(`${this.usersServiceURLBase}/usage/apps`, null, MessageTransport.HTTP, MessageMethod.GET);
+    this.messageService.send(message).subscribe((usage) =>
+      {
+        this.log(`Retrieved ${JSON.stringify(usage)} usage from the users micro-service.`, LogLevel.INFO);
+        this.usageAppList = usage;
+        this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
       },
       (error) =>
       {
@@ -71,6 +89,11 @@ export class UsageService
 
   public getAllUsage(): Array<Usage>
   {
-    return new Array<Usage>();
+    return this.usageList;
+  }
+
+  public getAppUsage(app: string): Array<Usage>
+  {
+    return this.usageList.filter((usage) => usage.app === app);
   }
 }
