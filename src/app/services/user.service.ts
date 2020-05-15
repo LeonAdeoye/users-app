@@ -35,7 +35,7 @@ export class UserService
         try
         {
           this.users = User.deserializeArray(users);
-          this.log(`Retrieved ${users.length} users from the users micro-service.`, LogLevel.INFO);
+          this.log(`Retrieved ${users.length} users from the users-service.`, LogLevel.INFO);
           this.log(`Users details: ${JSON.stringify(users)}`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }

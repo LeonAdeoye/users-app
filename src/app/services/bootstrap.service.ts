@@ -33,7 +33,7 @@ export class BootstrapService
         this.ipcRenderer.once("browser-ready-signal", () =>
         {
           this.configurationService.loadAllConfigurations();
-          this.usageService.loadAllUsageApps();
+          this.usageService.loadAllUsage();
           this.userService.loadAllUsers();
         });
       }
@@ -48,10 +48,10 @@ export class BootstrapService
 
       // TODO remove this as it is used only for non-electron debugging from a normal browser when the ng serve command is used.
       if(this.configurationService.getAllConfigurations().length === 0)
-        this.configurationService.loadAllConfigurations();
+        this.configurationService.loadAllConfigurations()
 
-      //if(this.usageService.getAllUsage().length === 0)
-        this.usageService.loadAllUsageApps();
+      // TODO add a check
+      this.usageService.loadAllUsage();
 
       if(this.userService.getAllUsers().length === 0)
         this.userService.loadAllUsers();

@@ -14,7 +14,7 @@ import { Usage } from "../models/usage";
 })
 export class UsageService
 {
-  private usageList = new Array<Usage>();
+  private usageMap = new Map<string, Array<Usage>>();
   private usageAppList = new Array<string>();
 
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
@@ -47,13 +47,17 @@ export class UsageService
       });
   }
 
-  public loadAllUsageApps(): void
+  public loadAllUsage(): void
   {
     const message = new Message(`${this.usersServiceURLBase}/usage/apps`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((usage) =>
       {
-        this.log(`Retrieved ${JSON.stringify(usage)} usage from the users micro-service.`, LogLevel.INFO);
+        this.log(`Retrieved ${JSON.stringify(usage)} usage apps from the users-service.`, LogLevel.INFO);
         this.usageAppList = usage;
+
+        for (const app of this.usageAppList)
+          this.loadUsage(app, null);
+
         this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
       },
       (error) =>
@@ -71,8 +75,8 @@ export class UsageService
       {
         try
         {
-          this.usageList = Usage.deserializeArray(usage);
-          this.log(`Retrieved ${usage.length} usage from the users micro-service.`, LogLevel.INFO);
+          this.usageMap.set(app, Usage.deserializeArray(usage));
+          this.log(`Retrieved ${usage.length} usage from the users-service.`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
         catch(err)
@@ -87,13 +91,8 @@ export class UsageService
       });
   }
 
-  public getAllUsage(): Array<Usage>
-  {
-    return this.usageList;
-  }
-
   public getAppUsage(app: string): Array<Usage>
   {
-    return this.usageList.filter((usage) => usage.app === app);
+    return this.usageMap.get(app);
   }
 }
