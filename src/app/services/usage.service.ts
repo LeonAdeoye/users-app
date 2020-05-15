@@ -36,7 +36,7 @@ export class UsageService
       (result) =>
       {
         if(result)
-          this.log(`result: ${result}`, LogLevel.DEBUG);
+          this.log(`Successfully saved usage: ${JSON.stringify(result)}`, LogLevel.DEBUG);
       },
       (error) =>
       {
