@@ -48,7 +48,7 @@ export class UsageComponent implements OnInit, OnDestroy
       }
     };
 
-    this.configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
+    this.usageService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.usageGridOptions.api)
       {
@@ -110,9 +110,9 @@ export class UsageComponent implements OnInit, OnDestroy
     for(let index = 0; index < usageList.length; ++index)
     {
       const usage = usageList[index];
-      const configurationUpdateRowNode = this.usageGridOptions.api.getRowNode(usage.id);
+      const usageUpdateRowNode = this.usageGridOptions.api.getRowNode(usage.id);
 
-      if(configurationUpdateRowNode)
+      if(usageUpdateRowNode)
         itemsToUpdate.push(usage);
       else
         itemsToAdd.push(usage);
@@ -153,12 +153,12 @@ export class UsageComponent implements OnInit, OnDestroy
   ngOnDestroy(): void
   {
     this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    this.configurationService.serviceUpdateSubject.unsubscribe();
+    this.usageService.serviceUpdateSubject.unsubscribe();
     this.gridSearchService.gridSearchTextSubject.unsubscribe();
   }
 
   public refreshUsage(): void
   {
-    this.configurationService.loadAllConfigurations();
+    this.usageService.loadAllUsage();
   }
 }
