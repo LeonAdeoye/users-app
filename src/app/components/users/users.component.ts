@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit, OnDestroy
       }
     };
 
-    this.configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
+    this.userService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.usersGridOptions.api)
       {
@@ -89,21 +89,20 @@ export class UsersComponent implements OnInit, OnDestroy
       {
         field: "fullName",
         sortable: true,
-        minWidth: 150,
-        width: 200
+        minWidth: 250,
+        width: 250
       },
       {
         field: "region",
         sortable: true,
-        minWidth: 200,
-        width: 470
+        minWidth: 100,
+        width: 100
       },
       {
         field: "countryCode",
         sortable: true,
-        minWidth: 100,
-        maxWidth: 140,
-        width: 140
+        minWidth: 130,
+        width: 130
       },
       {
         field: "location",
@@ -111,6 +110,18 @@ export class UsersComponent implements OnInit, OnDestroy
         minWidth: 150,
         maxWidth: 150,
         width: 150
+      },
+      {
+        field: "deskName",
+        sortable: true,
+        minWidth: 250,
+        width: 150
+      },
+      {
+        field: "isActive",
+        minWidth: 80,
+        maxWidth: 80,
+        width: 80
       }
     ];
   }
@@ -125,9 +136,9 @@ export class UsersComponent implements OnInit, OnDestroy
     for(let index = 0; index < users.length; ++index)
     {
       const user = users[index];
-      const configurationUpdateRowNode = this.usersGridOptions.api.getRowNode(user.id);
+      const userUpdateRowNode = this.usersGridOptions.api.getRowNode(user.id);
 
-      if(configurationUpdateRowNode)
+      if(userUpdateRowNode)
         itemsToUpdate.push(user);
       else
         itemsToAdd.push(user);
@@ -168,7 +179,7 @@ export class UsersComponent implements OnInit, OnDestroy
   ngOnDestroy(): void
   {
     this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    this.configurationService.serviceUpdateSubject.unsubscribe();
+    this.userService.serviceUpdateSubject.unsubscribe();
     this.gridSearchService.gridSearchTextSubject.unsubscribe();
   }
 
@@ -184,13 +195,12 @@ export class UsersComponent implements OnInit, OnDestroy
   {
     const selectedUser: User = this.getSelectedUser();
     if(selectedUser)
-      this.configurationService.deleteConfiguration(selectedUser.userId);
-    this.usageService.saveUsage("deleted configuration");
+      this.userService.invalidateUser(selectedUser.userId);
   }
 
   public refreshUsers(): void
   {
-    this.configurationService.loadAllConfigurations();
+    this.userService.loadAllUsers();
   }
 
   public cloneUser(): void

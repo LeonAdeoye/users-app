@@ -93,13 +93,4 @@ export class UserService
           this.log(`${error.message}`, LogLevel.ERROR);
       });
   }
-
-  getConfigurationValue(userId: string): User
-  {
-    for(let index = 0; index < this.users.length; ++index)
-      if(this.users[index].userId === userId)
-        return this.users[index];
-
-    return null;
-  }
 }
