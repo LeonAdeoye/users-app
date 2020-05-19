@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { UsageComponent } from "./usage.component";
+import { UsageComponent } from "../components/usage/usage.component";
 
 describe("UsageComponent", () =>
 {

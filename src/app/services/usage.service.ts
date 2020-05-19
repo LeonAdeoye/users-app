@@ -95,4 +95,9 @@ export class UsageService
   {
     return this.usageMap.get(app);
   }
+
+  public getAllUsage(): Array<Usage>
+  {
+    return new Array<Usage>();
+  }
 }

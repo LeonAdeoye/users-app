@@ -14,6 +14,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from './material.module';
 import { FormsModule } from "@angular/forms";
 import { DetailComponent } from "./components/detail/detail.component";
+import { UsersComponent } from "./components/users/users.component";
+import { UsageComponent } from "./components/usage/usage.component";
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { DetailComponent } from "./components/detail/detail.component";
     AppComponent,
     MainGridComponent,
     MainHeaderComponent,
-    DetailComponent
+    DetailComponent,
+    UsersComponent,
+    UsageComponent
   ],
   imports: [
     BrowserModule,

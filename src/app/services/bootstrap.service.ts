@@ -33,8 +33,8 @@ export class BootstrapService
         this.ipcRenderer.once("browser-ready-signal", () =>
         {
           this.configurationService.loadAllConfigurations();
-          this.usageService.loadAllUsage();
           this.userService.loadAllUsers();
+          this.usageService.loadAllUsage();
         });
       }
       catch (e)
@@ -50,11 +50,11 @@ export class BootstrapService
       if(this.configurationService.getAllConfigurations().length === 0)
         this.configurationService.loadAllConfigurations()
 
-      // TODO add a check
-      this.usageService.loadAllUsage();
-
       if(this.userService.getAllUsers().length === 0)
         this.userService.loadAllUsers();
+
+      // TODO add a check
+      // this.usageService.loadAllUsage();
     }
   }
 

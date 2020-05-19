@@ -24,7 +24,7 @@ export class User
   @JsonProperty("region", String)
   private _region: string;
 
-  @JsonProperty("isActive", Boolean)
+  @JsonProperty("active", Boolean)
   private _isActive: boolean;
 
   public constructor(fullName?: string, userId?: string, deskName?: string, location?: string, countryCode?: string, id?: string, region?: string, isActive?: boolean)
@@ -54,7 +54,7 @@ export class User
       location: this.location,
       region: this.region,
       countryCode: this.countryCode,
-      isActive: this.isActive
+      active: this.isActive
     };
   }
 
