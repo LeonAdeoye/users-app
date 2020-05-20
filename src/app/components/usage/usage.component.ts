@@ -143,7 +143,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public onGridReady(event): void
   {
-
+    this.usageService.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
   }
 
   ngOnInit(): void
@@ -153,8 +153,9 @@ export class UsageComponent implements OnInit, OnDestroy
   ngOnDestroy(): void
   {
     this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    this.usageService.serviceUpdateSubject.unsubscribe();
-    this.gridSearchService.gridSearchTextSubject.unsubscribe();
+    // TODO
+    // this.usageService.serviceUpdateSubject.unsubscribe();
+    // this.gridSearchService.gridSearchTextSubject.unsubscribe();
   }
 
   public refreshUsage(): void
