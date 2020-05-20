@@ -14,7 +14,7 @@ import { Constants } from "./models/constants";
 })
 export class AppComponent
 {
-  private isDetailPanelVisibleFlag: boolean = false;
+  private isUserDetailPanelVisibleFlag = false;
   public appName: string = Constants.APP_NAME;
   public selectedTab = "Users";
   public tabs = ["Users", "Usage"];
@@ -28,14 +28,14 @@ export class AppComponent
     this.configurationService.addConfigurationSubject.subscribe(() => this.addConfiguration());
   }
 
-  public isDetailPanelVisible(): boolean
+  public isUserDetailPanelVisible(): boolean
   {
-    return this.isDetailPanelVisibleFlag;
+    return this.isUserDetailPanelVisibleFlag;
   }
 
-  public toggleDetailPanelVisibility(): void
+  public toggleUserDetailPanelVisibility(): void
   {
-    this.isDetailPanelVisibleFlag = !this.isDetailPanelVisibleFlag;
+    this.isUserDetailPanelVisibleFlag = !this.isUserDetailPanelVisibleFlag;
   }
 
   private log(message: string, logLevel?: LogLevel): void
@@ -46,21 +46,21 @@ export class AppComponent
   private addConfiguration(): void
   {
     this.configuration = new Configuration();
-    this.toggleDetailPanelVisibility();
+    this.toggleUserDetailPanelVisibility();
   }
 
   private editConfiguration(configuration: Configuration): void
   {
     this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
     this.configuration = configuration;
-    this.toggleDetailPanelVisibility();
+    this.toggleUserDetailPanelVisibility();
   }
 
   private cloneConfiguration(configuration: Configuration): void
   {
     this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
     this.configuration = configuration;
-    this.toggleDetailPanelVisibility();
+    this.toggleUserDetailPanelVisibility();
   }
 
   public onSelect(selectedTab): void

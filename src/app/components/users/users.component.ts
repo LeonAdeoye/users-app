@@ -52,9 +52,7 @@ export class UsersComponent implements OnInit, OnDestroy
     this.userService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.usersGridOptions.api)
-      {
         this.refreshGrid();
-      }
     });
 
     this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
@@ -169,7 +167,7 @@ export class UsersComponent implements OnInit, OnDestroy
 
   public onGridReady(event): void
   {
-
+    this.userService.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
   }
 
   ngOnInit(): void
@@ -179,8 +177,9 @@ export class UsersComponent implements OnInit, OnDestroy
   ngOnDestroy(): void
   {
     this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    this.userService.serviceUpdateSubject.unsubscribe();
-    this.gridSearchService.gridSearchTextSubject.unsubscribe();
+    // TODO
+    // this.userService.serviceUpdateSubject.unsubscribe();
+    // this.gridSearchService.gridSearchTextSubject.unsubscribe();
   }
 
   public addUser(): void

@@ -13,6 +13,8 @@ $toolbar-max-height: 60px
 $toolbar-font-weight: 600
 $toolbar-title-left-margin: 16px
 $tab-height: 35px
+$tab-button-width: 90px
+$tab-view-margin-top: 92px
 
 
 \:host
@@ -86,7 +88,7 @@ div.menu-trigger
 
 .tab-button
   font-size: 8pt
-  width: 90px
+  width: $tab-button-width
   height: $tab-height
   padding: 2px 12px
   background: $primary-color
@@ -109,6 +111,9 @@ div.tab-background
   left: 0
   right: 0
   height: $tab-height
+
+div.tab-view
+  margin-top: $tab-view-margin-top
 
 
 
