@@ -1,7 +1,21 @@
 <div>
   <app-main-header></app-main-header>
-  <!--<div class="detail-panel" *ngIf="isDetailPanelVisible()">-->
-    <!--<app-detail [configuration]="configuration" (closePanelEventEmitter)="toggleDetailPanelVisibility()"></app-detail>-->
+  <!--<div class="user-detail-panel" *ngIf="isUserDetailPanelVisible()">-->
+    <!--<app-user-detail [user]="user" (closePanelEventEmitter)="toggleUserDetailPanelVisibility()"></app-user-detail>-->
   <!--</div>-->
-  <app-users></app-users>
+
+  <div class="tab-background">
+    <ul class="nav nav-tabs">
+      <li class="btn btn-default tab-button" *ngFor="let tab of tabs" [class.active]="tab === selectedTab" (click)="onSelect(tab)">
+        <span>{{tab}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedTab === 'Users'" style="margin-top: 92px">
+    <app-users></app-users>
+  </div>
+  <div *ngIf="selectedTab === 'Usage'" style="margin-top: 92px">
+    <app-usage></app-usage>
+  </div>
 </div>

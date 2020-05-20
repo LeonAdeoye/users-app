@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import { BootstrapService } from "./services/bootstrap.service";
 import { LoggingService } from "./services/logging.service";
 import { LogLevel } from "./models/types";
@@ -8,16 +8,18 @@ import { Constants } from "./models/constants";
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.sass"]
 })
 export class AppComponent
 {
   private isDetailPanelVisibleFlag: boolean = false;
   public appName: string = Constants.APP_NAME;
+  public selectedTab = "Users";
+  public tabs = ["Users", "Usage"];
 
-  configuration : Configuration;
+  configuration: Configuration;
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
@@ -59,5 +61,10 @@ export class AppComponent
     this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
     this.configuration = configuration;
     this.toggleDetailPanelVisibility();
+  }
+
+  public onSelect(selectedTab): void
+  {
+    this.selectedTab = selectedTab;
   }
 }
