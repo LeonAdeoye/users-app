@@ -8,6 +8,7 @@ import { UsageService } from "../../services/usage.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { User } from "../../models/user";
 import { UserService } from "../../services/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-users",
@@ -19,6 +20,8 @@ export class UsersComponent implements OnInit, OnDestroy
   public usersGridOptions: GridOptions;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   public contextMenuPosition = { x: "0px", y: "0px" };
+  private usersServiceSubscription: Subscription;
+  private gridSearchServiceSubscription: Subscription;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
@@ -49,13 +52,13 @@ export class UsersComponent implements OnInit, OnDestroy
       }
     };
 
-    this.userService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
+    this.usersServiceSubscription = this.userService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.usersGridOptions.api)
         this.refreshGrid();
     });
 
-    this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
+    this.gridSearchServiceSubscription = this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
     {
       if(this.usersGridOptions.api)
         this.usersGridOptions.api.setQuickFilter(gridSearchTextValue);
@@ -167,7 +170,7 @@ export class UsersComponent implements OnInit, OnDestroy
 
   public onGridReady(event): void
   {
-    this.userService.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
+    this.refreshGrid();
   }
 
   ngOnInit(): void
@@ -176,10 +179,9 @@ export class UsersComponent implements OnInit, OnDestroy
 
   ngOnDestroy(): void
   {
-    this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    // TODO
-    // this.userService.serviceUpdateSubject.unsubscribe();
-    // this.gridSearchService.gridSearchTextSubject.unsubscribe();
+    this.log("Performing unsubscribe on existing subscriptions in the onDestroy hook method.", LogLevel.DEBUG);
+    this.usersServiceSubscription.unsubscribe();
+    this.gridSearchServiceSubscription.unsubscribe();
   }
 
   public addUser(): void

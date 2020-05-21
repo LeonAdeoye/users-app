@@ -7,6 +7,7 @@ import { GridSearchService } from "../../services/grid-search.service";
 import { UsageService } from "../../services/usage.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { Usage } from "../../models/usage";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-usage",
@@ -18,6 +19,8 @@ export class UsageComponent implements OnInit, OnDestroy
   public usageGridOptions: GridOptions;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   public contextMenuPosition = { x: "0px", y: "0px" };
+  private usageServiceSubscription: Subscription;
+  private gridSearchServiceSubscription: Subscription;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService)
@@ -48,7 +51,7 @@ export class UsageComponent implements OnInit, OnDestroy
       }
     };
 
-    this.usageService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
+    this.usageServiceSubscription = this.usageService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.usageGridOptions.api)
       {
@@ -56,7 +59,7 @@ export class UsageComponent implements OnInit, OnDestroy
       }
     });
 
-    this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
+    this.gridSearchServiceSubscription = this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
     {
       if(this.usageGridOptions.api)
         this.usageGridOptions.api.setQuickFilter(gridSearchTextValue);
@@ -143,7 +146,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public onGridReady(event): void
   {
-    this.usageService.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
+    this.refreshGrid();
   }
 
   ngOnInit(): void
@@ -152,10 +155,9 @@ export class UsageComponent implements OnInit, OnDestroy
 
   ngOnDestroy(): void
   {
-    this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
-    // TODO
-    // this.usageService.serviceUpdateSubject.unsubscribe();
-    // this.gridSearchService.gridSearchTextSubject.unsubscribe();
+    this.log("Performing unsubscribe on existing subscriptions in the onDestroy hook method.", LogLevel.DEBUG);
+    this.usageServiceSubscription.unsubscribe();
+    this.gridSearchServiceSubscription.unsubscribe();
   }
 
   public refreshUsage(): void
