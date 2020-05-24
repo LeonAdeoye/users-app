@@ -85,8 +85,8 @@ export class UsageComponent implements OnInit, OnDestroy
       {
         field: "desk",
         sortable: true,
-        minWidth: 100,
-        width: 130
+        minWidth: 200,
+        width: 250
       }
     ];
 
