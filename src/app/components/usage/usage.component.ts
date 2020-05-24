@@ -26,7 +26,7 @@ export class UsageComponent implements OnInit, OnDestroy
               private gridSearchService: GridSearchService, private usageService: UsageService)
   {
     this.usageGridOptions = {} as GridOptions;
-    this.usageGridOptions.columnDefs = this.getColumnsDefinitions();
+    this.usageGridOptions.columnDefs = this.getColumnsDefinitions(usageService.getUsageApps());
     this.usageGridOptions.getRowNodeId = (row) =>
     {
       return row.id;
@@ -79,28 +79,21 @@ export class UsageComponent implements OnInit, OnDestroy
     return null;
   }
 
-  private getColumnsDefinitions(): any[]
+  private getColumnsDefinitions(apps: Array<string>): any[]
   {
-    return [
+    const columns = [
       {
-        field: "app",
+        field: "desk",
         sortable: true,
         minWidth: 100,
         width: 130
-      },
-      {
-        field: "userId",
-        sortable: true,
-        minWidth: 150,
-        width: 200
-      },
-      {
-        field: "action",
-        sortable: true,
-        minWidth: 200,
-        width: 470
       }
     ];
+
+    for(let index = 0; index < apps.length; ++index)
+      columns.push({field: apps[index], sortable: true, minWidth: 150, width: 150});
+
+    return columns;
   }
 
   private refreshGrid()

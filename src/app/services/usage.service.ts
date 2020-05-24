@@ -15,7 +15,7 @@ import { Usage } from "../models/usage";
 export class UsageService
 {
   private usageMap = new Map<string, Array<Usage>>();
-  private usageAppList = new Array<string>();
+  private usageApps = new Set<string>();
 
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;
@@ -53,9 +53,9 @@ export class UsageService
     this.messageService.send(message).subscribe((usage) =>
       {
         this.log(`Retrieved ${JSON.stringify(usage)} usage apps from the users-service.`, LogLevel.INFO);
-        this.usageAppList = usage;
+        this.usageApps = usage;
 
-        for (const app of this.usageAppList)
+        for (const app of this.usageApps)
           this.loadUsage(app, null);
 
         this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
@@ -99,5 +99,10 @@ export class UsageService
   public getAllUsage(): Array<Usage>
   {
     return new Array<Usage>();
+  }
+
+  public getUsageApps(): Array<string>
+  {
+    return Array.from(this.usageMap.keys());
   }
 }
