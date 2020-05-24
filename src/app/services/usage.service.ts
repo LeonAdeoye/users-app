@@ -58,11 +58,11 @@ export class UsageService
           this.usageMap.clear();
           for(let index = 0; index < usage.length; ++index)
           {
-            const appName = usage[index].app; // TODO
-            if(this.usageMap.has(appName))
-              this.usageMap.get(appName).push(usage[index]);
+            const appName = usage[index].app;
+            if(!this.usageMap.has(appName))
+              this.usageMap.set(appName, [usage[index]]);
             else
-              this.usageMap.set(appName, [...usage[index]]);
+              this.usageMap.get(appName).push(usage[index]);
           }
           this.log(`Retrieved ${usage.length} usage from the users-service.`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
