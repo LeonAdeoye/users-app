@@ -53,8 +53,8 @@ export class BootstrapService
       if(this.userService.getAllUsers().length === 0)
         this.userService.loadAllUsers();
 
-      // TODO add a check
-      // this.usageService.loadAllUsage();
+      if(this.usageService.getAllUsage().length === 0)
+        this.usageService.loadAllUsage();
     }
   }
 

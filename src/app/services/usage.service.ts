@@ -15,7 +15,8 @@ import { Usage } from "../models/usage";
 export class UsageService
 {
   private usageMap = new Map<string, Array<Usage>>();
-  private usageApps = new Set<string>();
+  private usageApps = new Array<string>();
+  private usage = new Array<Usage>();
 
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;
@@ -49,33 +50,20 @@ export class UsageService
 
   public loadAllUsage(): void
   {
-    const message = new Message(`${this.usersServiceURLBase}/usage/apps`, null, MessageTransport.HTTP, MessageMethod.GET);
-    this.messageService.send(message).subscribe((usage) =>
-      {
-        this.log(`Retrieved ${JSON.stringify(usage)} usage apps from the users-service.`, LogLevel.INFO);
-        this.usageApps = usage;
-
-        for (const app of this.usageApps)
-          this.loadUsage(app, null);
-
-        this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
-      },
-      (error) =>
-      {
-        if(error)
-          this.log(`${error.message}`, LogLevel.ERROR);
-      });
-  }
-
-  public loadUsage(app: string, user: string): void
-  {
-    const params = (user === null ? `app=${app}` : `?app=${app}&user=${user}`);
-    const message = new Message(`${this.usersServiceURLBase}/usage?${params}`, null, MessageTransport.HTTP, MessageMethod.GET);
+    const message = new Message(`${this.usersServiceURLBase}/usage`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((usage) =>
       {
         try
         {
-          this.usageMap.set(app, Usage.deserializeArray(usage));
+          this.usageMap.clear();
+          for(let index = 0; index < usage.length; ++index)
+          {
+            const appName = usage[index].app; // TODO
+            if(this.usageMap.has(appName))
+              this.usageMap.get(appName).push(usage[index]);
+            else
+              this.usageMap.set(appName, [...usage[index]]);
+          }
           this.log(`Retrieved ${usage.length} usage from the users-service.`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
@@ -98,7 +86,7 @@ export class UsageService
 
   public getAllUsage(): Array<Usage>
   {
-    return new Array<Usage>();
+    return this.usage;
   }
 
   public getUsageApps(): Array<string>
