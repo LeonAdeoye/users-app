@@ -93,4 +93,17 @@ export class UserService
           this.log(`${error.message}`, LogLevel.ERROR);
       });
   }
+
+  public getUniqueDesks(): Array<User>
+  {
+    const uniqueDesks: User[] = [];
+
+    this.users.forEach( (user) =>
+    {
+      if(uniqueDesks.findIndex( currentUser => currentUser.deskName === user.deskName) === -1)
+        uniqueDesks.push(user);
+    });
+
+    return uniqueDesks;
+  }
 }

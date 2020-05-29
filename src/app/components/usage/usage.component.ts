@@ -8,6 +8,7 @@ import { UsageService } from "../../services/usage.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { Usage } from "../../models/usage";
 import { Subscription } from "rxjs";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: "app-usage",
@@ -23,7 +24,7 @@ export class UsageComponent implements OnInit, OnDestroy
   private gridSearchServiceSubscription: Subscription;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
-              private gridSearchService: GridSearchService, private usageService: UsageService)
+              private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
   {
     this.usageGridOptions = {} as GridOptions;
     this.usageGridOptions.columnDefs = this.getColumnsDefinitions(usageService.getUsageApps());
@@ -83,7 +84,7 @@ export class UsageComponent implements OnInit, OnDestroy
   {
     const columns = [
       {
-        field: "desk",
+        field: "deskName",
         sortable: true,
         minWidth: 200,
         width: 250
@@ -102,24 +103,24 @@ export class UsageComponent implements OnInit, OnDestroy
     const itemsToRemove = [];
     const itemsToAdd = [];
 
-    const usageList = this.usageService.getAllUsage();
-    for(let index = 0; index < usageList.length; ++index)
+    const deskList = this.userService.getUniqueDesks();
+    for(let index = 0; index < deskList.length; ++index)
     {
-      const usage = usageList[index];
-      const usageUpdateRowNode = this.usageGridOptions.api.getRowNode(usage.id);
+      const desk = deskList[index];
+      const usageUpdateRowNode = this.usageGridOptions.api.getRowNode(desk.deskName);
 
       if(usageUpdateRowNode)
-        itemsToUpdate.push(usage);
+        itemsToUpdate.push(desk);
       else
-        itemsToAdd.push(usage);
+        itemsToAdd.push(desk);
     }
 
     this.usageGridOptions.api.forEachNode((currentRow) =>
     {
       let foundMatchingRow = false;
-      for(let index = 0; index < usageList.length; ++index)
+      for(let index = 0; index < deskList.length; ++index)
       {
-        if(currentRow.data.id === usageList[index].id)
+        if(currentRow.data.deskName === deskList[index].deskName)
         {
           foundMatchingRow = true;
           break;
