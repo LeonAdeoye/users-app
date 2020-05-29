@@ -112,11 +112,13 @@ export class UsageComponent implements OnInit, OnDestroy
     for(let usageIndex = 0; usageIndex < usageLength; ++usageIndex)
     {
       const usage = appUsage[usageIndex];
-      const userLength = this.userService.getAllUsers().length;
-      let count = 0; let total = 0;
+      const users =  this.userService.getAllUsers();
+      const userLength = users.length;
+      let count = 0;
+      let total = 0;
       for(let userIndex = 0; userIndex < userLength; ++userIndex)
       {
-          const user = this.userService.getAllUsers()[userIndex];
+          const user = users[userIndex];
           if(user.fullName === usage.user  && user.deskName === deskName)
           {
             ++count;
