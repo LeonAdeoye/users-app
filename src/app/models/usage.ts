@@ -19,15 +19,15 @@ export class Usage
   private _lastUsageDate: string;
 
   @JsonProperty("monthlyCount", String)
-  private _monthlyCount: Array<string>;
+  private _monthlyCount: Array<number>;
 
-  public constructor(app?: string, user?: string, action?: string, lastUsageDate?: string, monthlyCount?: Array<string>, id?: string)
+  public constructor(app?: string, user?: string, action?: string, lastUsageDate?: string, monthlyCount?: Array<number>, id?: string)
   {
     this._app = app || "";
     this._user = user || "";
     this._action = action || "";
     this._lastUsageDate = lastUsageDate || "";
-    this._monthlyCount = monthlyCount || new Array<string>();
+    this._monthlyCount = monthlyCount || new Array<number>();
     this._id = id;
   }
 
@@ -98,12 +98,12 @@ export class Usage
     this._lastUsageDate = lastUsageDate;
   }
 
-  public get monthlyCount(): Array<string>
+  public get monthlyCount(): Array<number>
   {
     return this._monthlyCount;
   }
 
-  public set monthlyCount(monthlyCount: Array<string>)
+  public set monthlyCount(monthlyCount: Array<number>)
   {
     this._monthlyCount = monthlyCount;
   }

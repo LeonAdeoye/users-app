@@ -84,7 +84,8 @@ export class UsageComponent implements OnInit, OnDestroy
   {
     const columns = [
       {
-        field: "deskName",
+        headerName: "deskName",
+        valueGetter: (params) => params.data.deskName,
         sortable: true,
         minWidth: 200,
         width: 250
@@ -92,9 +93,41 @@ export class UsageComponent implements OnInit, OnDestroy
     ];
 
     for(let index = 0; index < apps.length; ++index)
-      columns.push({field: apps[index], sortable: true, minWidth: 150, width: 150});
+      columns.push(
+        {
+          headerName: apps[index],
+          valueGetter: (params) => this.getUsage(apps[index], params.data.deskName),
+          sortable: true,
+          minWidth: 150,
+          width: 150
+        });
 
     return columns;
+  }
+
+  public getUsage(appName: string, deskName: string): number
+  {
+    const usageLength = this.usageService.getAllUsage().length;
+    for(let usageIndex = 0; usageIndex < usageLength; ++usageIndex)
+    {
+      const usage = this.usageService.getAllUsage()[usageIndex];
+      const userLength = this.userService.getAllUsers().length;
+      if(usage.app === appName)
+      {
+        let count = 0; let total = 0;
+        for(let userIndex = 0; userIndex < userLength; ++userIndex)
+        {
+            const user = this.userService.getAllUsers()[userIndex];
+            if(user.userId === usage.user  && user.deskName === deskName)
+            {
+              ++count;
+              total = total + usage.monthlyCount.reduce((a, b) => a + b, 0);
+            }
+        }
+        return total/count;
+      }
+    }
+    return 0;
   }
 
   private refreshGrid()
