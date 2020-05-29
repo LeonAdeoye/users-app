@@ -107,25 +107,23 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public getUsage(appName: string, deskName: string): number
   {
-    const usageLength = this.usageService.getAllUsage().length;
+    const appUsage = this.usageService.getAppUsage(appName);
+    const usageLength = appUsage.length;
     for(let usageIndex = 0; usageIndex < usageLength; ++usageIndex)
     {
-      const usage = this.usageService.getAllUsage()[usageIndex];
+      const usage = appUsage[usageIndex];
       const userLength = this.userService.getAllUsers().length;
-      if(usage.app === appName)
+      let count = 0; let total = 0;
+      for(let userIndex = 0; userIndex < userLength; ++userIndex)
       {
-        let count = 0; let total = 0;
-        for(let userIndex = 0; userIndex < userLength; ++userIndex)
-        {
-            const user = this.userService.getAllUsers()[userIndex];
-            if(user.userId === usage.user  && user.deskName === deskName)
-            {
-              ++count;
-              total = total + usage.monthlyCount.reduce((a, b) => a + b, 0);
-            }
-        }
-        return total/count;
+          const user = this.userService.getAllUsers()[userIndex];
+          if(user.fullName === usage.user  && user.deskName === deskName)
+          {
+            ++count;
+            total = total + usage.monthlyCount.reduce((a, b) => a + b, 0);
+          }
       }
+      return isNaN(total/count) ? 0 : total/count;
     }
     return 0;
   }
