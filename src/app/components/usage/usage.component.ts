@@ -22,6 +22,9 @@ export class UsageComponent implements OnInit, OnDestroy
   public contextMenuPosition = { x: "0px", y: "0px" };
   private usageServiceSubscription: Subscription;
   private gridSearchServiceSubscription: Subscription;
+  public frameworkComponents;
+  public detailCellRenderer;
+  public detailRowHeight;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
@@ -32,6 +35,13 @@ export class UsageComponent implements OnInit, OnDestroy
     {
       return row.id;
     };
+
+    this.detailCellRenderer = "myDetailCellRenderer";
+    this.detailRowHeight = 200;
+
+    this.frameworkComponents = {
+      myDetailCellRenderer: "AppUsageComponent"
+    }
 
     this.usageGridOptions.suppressCellSelection = true;
 
