@@ -9,6 +9,7 @@
     [gridOptions]="usageGridOptions"
     [frameworkComponents]="frameworkComponents"
     (gridReady)="onGridReady($event)"
+    (rowClicked)="expandOrCloseDeskUsage($event)"
     rowSelection="single">
   </ag-grid-angular>
 </div>

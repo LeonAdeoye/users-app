@@ -19,12 +19,13 @@ export class UsageComponent implements OnInit, OnDestroy
 {
   public usageGridOptions: GridOptions;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  public contextMenuPosition = { x: "0px", y: "0px" };
+  public contextMenuPosition = {x: "0px", y: "0px"};
   private usageServiceSubscription: Subscription;
   private gridSearchServiceSubscription: Subscription;
   public frameworkComponents;
   public detailCellRenderer;
   public detailRowHeight;
+  public currentExpandedRow;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
@@ -47,11 +48,11 @@ export class UsageComponent implements OnInit, OnDestroy
 
     this.usageGridOptions.onCellContextMenu = (params) =>
     {
-      if(this.trigger && this.trigger.menuOpen)
+      if (this.trigger && this.trigger.menuOpen)
         this.trigger.closeMenu();
 
       const mouseEvent = params.event as MouseEvent;
-      if(this.trigger && this.trigger.menuClosed && mouseEvent && mouseEvent.clientX && mouseEvent.clientY)
+      if (this.trigger && this.trigger.menuClosed && mouseEvent && mouseEvent.clientX && mouseEvent.clientY)
       {
         this.contextMenuPosition.x = `${mouseEvent.clientX}px`;
         this.contextMenuPosition.y = `${mouseEvent.clientY}px`;
@@ -64,7 +65,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
     this.usageServiceSubscription = this.usageService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
-      if(serviceUpdate  === ServiceUpdate.REFRESH && this.usageGridOptions.api)
+      if (serviceUpdate === ServiceUpdate.REFRESH && this.usageGridOptions.api)
       {
         this.refreshGrid();
       }
@@ -72,7 +73,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
     this.gridSearchServiceSubscription = this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
     {
-      if(this.usageGridOptions.api)
+      if (this.usageGridOptions.api)
         this.usageGridOptions.api.setQuickFilter(gridSearchTextValue);
     });
   }
@@ -84,7 +85,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public getSelectedUsage(): Usage
   {
-    if(this.usageGridOptions.api && this.usageGridOptions.api.getSelectedRows().length > 0)
+    if (this.usageGridOptions.api && this.usageGridOptions.api.getSelectedRows().length > 0)
       return this.usageGridOptions.api.getSelectedRows()[0] as Usage;
 
     return null;
@@ -102,7 +103,7 @@ export class UsageComponent implements OnInit, OnDestroy
       }
     ];
 
-    for(let index = 0; index < apps.length; ++index)
+    for (let index = 0; index < apps.length; ++index)
       columns.push(
         {
           headerName: apps[index],
@@ -119,23 +120,23 @@ export class UsageComponent implements OnInit, OnDestroy
   {
     const appUsage = this.usageService.getAppUsage(appName);
     const usageLength = appUsage.length;
-    for(let usageIndex = 0; usageIndex < usageLength; ++usageIndex)
+    for (let usageIndex = 0; usageIndex < usageLength; ++usageIndex)
     {
       const usage = appUsage[usageIndex];
-      const users =  this.userService.getAllUsers();
+      const users = this.userService.getAllUsers();
       const userLength = users.length;
       let count = 0;
       let total = 0;
-      for(let userIndex = 0; userIndex < userLength; ++userIndex)
+      for (let userIndex = 0; userIndex < userLength; ++userIndex)
       {
-          const user = users[userIndex];
-          if(user.fullName === usage.user  && user.deskName === deskName)
-          {
-            ++count;
-            total = total + usage.monthlyCount.reduce((a, b) => a + b, 0);
-          }
+        const user = users[userIndex];
+        if (user.fullName === usage.user && user.deskName === deskName)
+        {
+          ++count;
+          total = total + usage.monthlyCount.reduce((a, b) => a + b, 0);
+        }
       }
-      return isNaN(total/count) ? 0 : total/count;
+      return isNaN(total / count) ? 0 : total / count;
     }
     return 0;
   }
@@ -147,12 +148,12 @@ export class UsageComponent implements OnInit, OnDestroy
     const itemsToAdd = [];
 
     const deskList = this.userService.getUniqueDesks();
-    for(let index = 0; index < deskList.length; ++index)
+    for (let index = 0; index < deskList.length; ++index)
     {
       const desk = deskList[index];
       const usageUpdateRowNode = this.usageGridOptions.api.getRowNode(desk.deskName);
 
-      if(usageUpdateRowNode)
+      if (usageUpdateRowNode)
         itemsToUpdate.push(desk);
       else
         itemsToAdd.push(desk);
@@ -161,23 +162,23 @@ export class UsageComponent implements OnInit, OnDestroy
     this.usageGridOptions.api.forEachNode((currentRow) =>
     {
       let foundMatchingRow = false;
-      for(let index = 0; index < deskList.length; ++index)
+      for (let index = 0; index < deskList.length; ++index)
       {
-        if(currentRow.data.deskName === deskList[index].deskName)
+        if (currentRow.data.deskName === deskList[index].deskName)
         {
           foundMatchingRow = true;
           break;
         }
       }
 
-      if(!foundMatchingRow)
+      if (!foundMatchingRow)
         itemsToRemove.push(currentRow.data);
     });
 
     this.usageGridOptions.api.updateRowData({remove: itemsToRemove});
     this.usageGridOptions.api.updateRowData({update: itemsToUpdate});
 
-    for(let index = 0; index < itemsToAdd.length; ++index)
+    for (let index = 0; index < itemsToAdd.length; ++index)
       this.usageGridOptions.api.updateRowData({add: [itemsToAdd[index]], addIndex: index});
   }
 
@@ -201,4 +202,30 @@ export class UsageComponent implements OnInit, OnDestroy
   {
     this.usageService.loadAllUsage();
   }
+
+  public expandOrCloseDeskUsage(row): void
+  {
+    if (row.node.master)
+    {
+      row.node.setExpanded(!row.node.expanded)
+
+      if (this.currentExpandedRow !== undefined)
+      {
+        if (this.currentExpandedRow !== row.node.id)
+        {
+          row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
+          this.currentExpandedRow = row.node.id;
+        }
+      }
+      else
+        this.currentExpandedRow = row.node.id;
+    }
+    this.autoFitColumns();
+  }
+
+  public autoFitColumns()
+  {
+    this.usageGridOptions.api.sizeColumnsToFit();
+  }
+
 }
