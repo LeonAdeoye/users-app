@@ -205,26 +205,22 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public expandOrCloseDeskUsage(row): void
   {
-    if (row.node.master)
-    {
-      row.node.setExpanded(!row.node.expanded)
+    row.node.setExpanded(!row.node.expanded);
 
-      if (this.currentExpandedRow !== undefined)
+    if (this.currentExpandedRow !== undefined)
+    {
+      if (this.currentExpandedRow !== row.node.id)
       {
-        if (this.currentExpandedRow !== row.node.id)
-        {
-          row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
-          this.currentExpandedRow = row.node.id;
-        }
-      }
-      else
+        row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
         this.currentExpandedRow = row.node.id;
+      }
     }
+    else
+      this.currentExpandedRow = row.node.id;
   }
 
   public autoFitColumns()
   {
     this.usageGridOptions.api.sizeColumnsToFit();
   }
-
 }
