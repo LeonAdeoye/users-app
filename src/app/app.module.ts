@@ -1,8 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule } from "@angular/platform-browser";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MainGridComponent } from "./components/main-grid/main-grid.component";
 import { MainHeaderComponent } from "./components/main-header/main-header.component";
 import { AgGridModule } from "ag-grid-angular";
 import { LoggingService } from "./services/logging.service";
@@ -26,7 +25,6 @@ import { AppUsageComponent } from "./components/app-usage/app-usage.component";
   ],
   declarations: [
     AppComponent,
-    MainGridComponent,
     MainHeaderComponent,
     DetailComponent,
     UsersComponent,
