@@ -220,7 +220,6 @@ export class UsageComponent implements OnInit, OnDestroy
       else
         this.currentExpandedRow = row.node.id;
     }
-    this.autoFitColumns();
   }
 
   public autoFitColumns()

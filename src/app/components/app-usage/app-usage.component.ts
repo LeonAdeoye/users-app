@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { IAfterGuiAttachedParams, ICellRendererComp, ICellRendererParams } from "ag-grid-community";
+import { Component } from "@angular/core";
+import { IAfterGuiAttachedParams, ICellRendererComp } from "ag-grid-community";
+
 
 @Component({
   selector: "app-app-usage",
@@ -20,11 +21,6 @@ export class AppUsageComponent implements ICellRendererComp
   }
 
   getGui(): HTMLElement
-  {
-    return undefined;
-  }
-
-  init(params: ICellRendererParams): Promise<void> | void
   {
     return undefined;
   }
