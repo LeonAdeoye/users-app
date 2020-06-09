@@ -15,7 +15,7 @@ import { FormsModule } from "@angular/forms";
 import { DetailComponent } from "./components/detail/detail.component";
 import { UsersComponent } from "./components/users/users.component";
 import { UsageComponent } from "./components/usage/usage.component";
-import { AppUsageComponent } from "./components/app-usage/app-usage.component";
+import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component";
 
 
 @NgModule({
@@ -33,7 +33,7 @@ import { AppUsageComponent } from "./components/app-usage/app-usage.component";
   imports: [
     BrowserModule,
     AgGridModule.withComponents([
-      AppUsageComponent
+      DeskUsageComponent
     ]),
     BrowserAnimationsModule,
     HttpClientModule,

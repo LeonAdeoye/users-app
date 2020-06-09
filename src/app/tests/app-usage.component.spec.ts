@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppUsageComponent } from '../components/app-usage/app-usage.component';
+import { DeskUsageComponent } from '../components/desk-usage/desk-usage.component';
 
-describe('AppUsageComponent', () => {
-  let component: AppUsageComponent;
-  let fixture: ComponentFixture<AppUsageComponent>;
+describe('DeskUsageComponent', () => {
+  let component: DeskUsageComponent;
+  let fixture: ComponentFixture<DeskUsageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppUsageComponent ]
+      declarations: [ DeskUsageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppUsageComponent);
+    fixture = TestBed.createComponent(DeskUsageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,11 +3,11 @@ import { IAfterGuiAttachedParams, ICellRendererComp } from "ag-grid-community";
 
 
 @Component({
-  selector: "app-app-usage",
-  templateUrl: "./app-usage.component.html",
-  styleUrls: ["./app-usage.component.sass"]
+  selector: "desk-usage",
+  templateUrl: "./desk-usage.component.html",
+  styleUrls: ["./desk-usage.component.sass"]
 })
-export class AppUsageComponent implements ICellRendererComp
+export class DeskUsageComponent implements ICellRendererComp
 {
 
   constructor() { }

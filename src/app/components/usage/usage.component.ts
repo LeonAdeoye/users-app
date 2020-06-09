@@ -41,7 +41,7 @@ export class UsageComponent implements OnInit, OnDestroy
     this.detailRowHeight = 200;
 
     this.frameworkComponents = {
-      myDetailCellRenderer: "AppUsageComponent"
+      myDetailCellRenderer: "DeskUsageComponent"
     }
 
     this.usageGridOptions.suppressCellSelection = true;
@@ -66,9 +66,7 @@ export class UsageComponent implements OnInit, OnDestroy
     this.usageServiceSubscription = this.usageService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if (serviceUpdate === ServiceUpdate.REFRESH && this.usageGridOptions.api)
-      {
         this.refreshGrid();
-      }
     });
 
     this.gridSearchServiceSubscription = this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
@@ -209,14 +207,16 @@ export class UsageComponent implements OnInit, OnDestroy
 
     if (this.currentExpandedRow !== undefined)
     {
-      if (this.currentExpandedRow !== row.node.id)
+      if (this.currentExpandedRow !== row.node.deskName)
       {
         row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
-        this.currentExpandedRow = row.node.id;
+        this.currentExpandedRow = row.node.deskName;
       }
     }
     else
-      this.currentExpandedRow = row.node.id;
+      this.currentExpandedRow = row.node.deskName;
+
+    this.usageService.setDeskDrilldown(row.node.deskName);
   }
 
   public autoFitColumns()
