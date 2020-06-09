@@ -26,6 +26,7 @@ export class UsageComponent implements OnInit, OnDestroy
   public detailCellRenderer;
   public detailRowHeight;
   public currentExpandedRow;
+  public context;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
@@ -36,6 +37,11 @@ export class UsageComponent implements OnInit, OnDestroy
     {
       return row.id;
     };
+
+    this.context =
+    {
+      componentParent: this
+    }
 
     this.detailCellRenderer = "myDetailCellRenderer";
     this.detailRowHeight = 200;
@@ -207,16 +213,16 @@ export class UsageComponent implements OnInit, OnDestroy
 
     if (this.currentExpandedRow !== undefined)
     {
-      if (this.currentExpandedRow !== row.node.deskName)
+      if (this.currentExpandedRow !== row.node.data.deskName)
       {
         row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
-        this.currentExpandedRow = row.node.deskName;
+        this.currentExpandedRow = row.node.data.deskName;
       }
     }
     else
-      this.currentExpandedRow = row.node.deskName;
+      this.currentExpandedRow = row.node.data.deskName;
 
-    this.usageService.setDeskDrilldown(row.node.deskName);
+    this.usageService.setDeskDrilldown(row.node.data.deskName);
   }
 
   public autoFitColumns()
