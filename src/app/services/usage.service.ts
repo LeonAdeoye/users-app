@@ -17,7 +17,7 @@ export class UsageService
   private usageMap = new Map<string, Array<Usage>>();
   private usageApps = new Array<string>();
   private usage = new Array<Usage>();
-  private deskDrilldownSubject: Subject<string>;
+  public deskDrilldownSubject: Subject<string>;
 
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;

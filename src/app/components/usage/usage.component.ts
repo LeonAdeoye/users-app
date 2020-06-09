@@ -42,7 +42,7 @@ export class UsageComponent implements OnInit, OnDestroy
 
     this.frameworkComponents = {
       myDetailCellRenderer: "DeskUsageComponent"
-    }
+    };
 
     this.usageGridOptions.suppressCellSelection = true;
 
