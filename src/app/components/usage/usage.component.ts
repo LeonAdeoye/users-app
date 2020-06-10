@@ -35,7 +35,7 @@ export class UsageComponent implements OnInit, OnDestroy
     this.usageGridOptions.columnDefs = this.getColumnsDefinitions(usageService.getUsageApps());
     this.usageGridOptions.getRowNodeId = (row) =>
     {
-      return row.id;
+      return row.deskName;
     };
 
     this.context =

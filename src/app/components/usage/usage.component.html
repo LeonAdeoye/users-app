@@ -2,9 +2,9 @@
 <mat-menu #menu="matMenu">
   <button class="context-menu-button" mat-menu-item (click)="refreshUsage()">Refresh usage</button>
 </mat-menu>
-<div class="content" role="main" style="height:740px">
+<div class="content" role="main">
   <ag-grid-angular
-    style="width: 300px; height: 200px;"
+    style="height: 740px;"
     class="ag-theme-balham"
     [gridOptions]="usageGridOptions"
     [detailRowHeight]="detailRowHeight"
