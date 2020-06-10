@@ -32,6 +32,7 @@ export class UsageComponent implements OnInit, OnDestroy
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
   {
     this.usageGridOptions = {} as GridOptions;
+    this.usageGridOptions.masterDetail = true;
     this.usageGridOptions.columnDefs = this.getColumnsDefinitions(usageService.getUsageApps());
     this.usageGridOptions.getRowNodeId = (row) =>
     {
