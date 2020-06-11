@@ -7,11 +7,8 @@
     style="height: 740px;"
     class="ag-theme-balham"
     [gridOptions]="usageGridOptions"
-    [detailRowHeight]="detailRowHeight"
-    [context]="context"
-    [frameworkComponents]="frameworkComponents"
     (gridReady)="onGridReady($event)"
-    (rowClicked)="expandOrCloseDeskUsage($event)"
+    (rowClicked)="displayDeskUsage($event)"
     rowSelection="single">
   </ag-grid-angular>
 </div>

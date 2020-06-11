@@ -8,7 +8,7 @@ import { UsageService } from "../../services/usage.service";
   templateUrl: "./desk-usage.component.html",
   styleUrls: ["./desk-usage.component.sass"]
 })
-export class DeskUsageComponent implements ICellRendererComp
+export class DeskUsageComponent
 {
   private deskDrilldown: string;
 
@@ -20,23 +20,9 @@ export class DeskUsageComponent implements ICellRendererComp
     });
   }
 
-  afterGuiAttached(params?: IAfterGuiAttachedParams): void
-  {
-  }
-
-  destroy(): void
+  OnDestroy(): void
   {
     this.usageService.deskDrilldownSubject.unsubscribe();
-  }
-
-  getGui(): HTMLElement
-  {
-    return undefined;
-  }
-
-  refresh(params: any): boolean
-  {
-    return false;
   }
 
 }

@@ -22,33 +22,17 @@ export class UsageComponent implements OnInit, OnDestroy
   public contextMenuPosition = {x: "0px", y: "0px"};
   private usageServiceSubscription: Subscription;
   private gridSearchServiceSubscription: Subscription;
-  public frameworkComponents;
-  public detailCellRenderer;
   public detailRowHeight;
-  public currentExpandedRow;
   public context;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
   {
     this.usageGridOptions = {} as GridOptions;
-    this.usageGridOptions.masterDetail = true;
     this.usageGridOptions.columnDefs = this.getColumnsDefinitions(usageService.getUsageApps());
     this.usageGridOptions.getRowNodeId = (row) =>
     {
       return row.deskName;
-    };
-
-    this.context =
-    {
-      componentParent: this
-    }
-
-    this.detailCellRenderer = "myDetailCellRenderer";
-    this.detailRowHeight = 200;
-
-    this.frameworkComponents = {
-      myDetailCellRenderer: "DeskUsageComponent"
     };
 
     this.usageGridOptions.suppressCellSelection = true;
@@ -208,21 +192,8 @@ export class UsageComponent implements OnInit, OnDestroy
     this.usageService.loadAllUsage();
   }
 
-  public expandOrCloseDeskUsage(row): void
+  public displayDeskUsage(row): void
   {
-    row.node.setExpanded(!row.node.expanded);
-
-    if (this.currentExpandedRow !== undefined)
-    {
-      if (this.currentExpandedRow !== row.node.data.deskName)
-      {
-        row.api.getRowNode(this.currentExpandedRow).setExpanded(false);
-        this.currentExpandedRow = row.node.data.deskName;
-      }
-    }
-    else
-      this.currentExpandedRow = row.node.data.deskName;
-
     this.usageService.setDeskDrilldown(row.node.data.deskName);
   }
 
