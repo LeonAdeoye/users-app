@@ -18,7 +18,7 @@ export class PopupService
   {
     const windowProperties =
     {
-      width: 400,
+      width: 600,
       message: messageToDisplay,
       title: titleToDisplay,
       isErrorPopup: isErrorPopupFlag === null ? false : isErrorPopupFlag,

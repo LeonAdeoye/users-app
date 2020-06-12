@@ -16,6 +16,8 @@ import { DetailComponent } from "./components/detail/detail.component";
 import { UsersComponent } from "./components/users/users.component";
 import { UsageComponent } from "./components/usage/usage.component";
 import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component";
+import { PopupComponent } from "./components/popup/popup.component";
+import { ModalModule } from "ngx-bootstrap/modal";
 
 @NgModule({
   schemas:
@@ -28,6 +30,7 @@ import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component
     DetailComponent,
     UsersComponent,
     UsageComponent,
+    PopupComponent,
     DeskUsageComponent
   ],
   imports: [
@@ -38,6 +41,7 @@ import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
+    ModalModule.forRoot(),
     FormsModule
   ],
   providers: [
@@ -47,6 +51,14 @@ import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component
     BootstrapService,
     PopupService
   ],
-  bootstrap: [AppComponent]
+  entryComponents:
+  [
+    PopupComponent
+  ],
+  bootstrap:
+  [
+    AppComponent
+  ]
 })
+
 export class AppModule { }
