@@ -35,8 +35,8 @@ export enum ServiceUpdate
 
 export enum Answer
 {
-  Yes,
-  No,
-  Cancel,
-  Ok
+  YES,
+  NO,
+  CANCEL,
+  OK
 }

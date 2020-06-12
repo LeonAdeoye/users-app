@@ -31,25 +31,25 @@ export class PopupComponent implements OnInit
 
   public okClick(): void
   {
-    this.answerSubject.next(Answer.Ok);
+    this.answerSubject.next(Answer.OK);
     this.bsModalRef.hide();
   }
 
   public noClick(): void
   {
-    this.answerSubject.next(Answer.No);
+    this.answerSubject.next(Answer.NO);
     this.bsModalRef.hide();
   }
 
   public yesClick(): void
   {
-    this.answerSubject.next(Answer.Yes);
+    this.answerSubject.next(Answer.YES);
     this.bsModalRef.hide();
   }
 
   public cancelClick(): void
   {
-    this.answerSubject.next(Answer.Cancel);
+    this.answerSubject.next(Answer.CANCEL);
     this.bsModalRef.hide();
   }
 }
