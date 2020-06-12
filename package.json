@@ -31,12 +31,13 @@
     "json2typescript": "^1.2.3",
     "lodash": "^4.17.15",
     "log4javascript": "^1.4.15",
+    "ngx-bootstrap": "^5.6.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.3",
+    "@angular-devkit/build-angular": "^0.901.8",
     "@angular/cli": "~9.0.3",
     "@angular/compiler-cli": "~9.0.2",
     "@angular/language-service": "~9.0.2",

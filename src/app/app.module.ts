@@ -28,7 +28,8 @@ import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component
     MainHeaderComponent,
     DetailComponent,
     UsersComponent,
-    UsageComponent
+    UsageComponent,
+    DeskUsageComponent
   ],
   imports: [
     BrowserModule,
