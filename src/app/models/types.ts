@@ -32,3 +32,11 @@ export enum ServiceUpdate
   STALE,
   DISCONNECTED
 }
+
+export enum Answer
+{
+  Yes,
+  No,
+  Cancel,
+  Ok
+}
