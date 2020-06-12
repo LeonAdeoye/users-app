@@ -14,14 +14,14 @@ export class PopupService
 
   constructor(private modalService: BsModalService) {}
 
-  show(isErrorPopupFlag: boolean, titleToDisplay: string, messageToDisplay: string, ok?: boolean, cancel?: boolean, yes?: boolean, no?: boolean): Subject<Answer>
+  show(titleToDisplay: string, messageToDisplay: string, ok?: boolean, cancel?: boolean, yes?: boolean, no?: boolean, isErrorPopupFlag?: boolean): Subject<Answer>
   {
     const windowProperties =
     {
       width: 400,
       message: messageToDisplay,
       title: titleToDisplay,
-      isErrorPopup: isErrorPopupFlag,
+      isErrorPopup: isErrorPopupFlag === null ? false : isErrorPopupFlag,
       class: "modal-dialog modal-sm"
     };
 

@@ -17,7 +17,6 @@ import { UsersComponent } from "./components/users/users.component";
 import { UsageComponent } from "./components/usage/usage.component";
 import { DeskUsageComponent } from "./components/desk-usage/desk-usage.component";
 
-
 @NgModule({
   schemas:
   [

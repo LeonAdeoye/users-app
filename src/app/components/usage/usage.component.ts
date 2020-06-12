@@ -9,6 +9,7 @@ import { LogLevel, ServiceUpdate } from "../../models/types";
 import { Usage } from "../../models/usage";
 import { Subscription } from "rxjs";
 import { UserService } from "../../services/user.service";
+import { PopupService } from "../../services/popup.service";
 
 @Component({
   selector: "app-usage",
@@ -25,7 +26,7 @@ export class UsageComponent implements OnInit, OnDestroy
   public detailRowHeight;
   public context;
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private popupService: PopupService,
               private gridSearchService: GridSearchService, private usageService: UsageService, private userService: UserService)
   {
     this.usageGridOptions = {} as GridOptions;
@@ -195,6 +196,7 @@ export class UsageComponent implements OnInit, OnDestroy
   public displayDeskUsage(row): void
   {
     this.usageService.setDeskDrilldown(row.node.data.deskName);
+    this.popupService.show("title", "message", true, false, false, false);
   }
 
   public autoFitColumns()
