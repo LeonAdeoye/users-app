@@ -1,0 +1,17 @@
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title-error" *ngIf="isErrorPopup">{{title}}</h4>
+      <h4 class="modal-title-error" *ngIf="!isErrorPopup">{{title}}</h4>
+    </div>
+    <div class="modal-body">{{message}}</div>
+    <div class="modal-footer">
+      <div class="pull-right">
+        <button class="btn" (click)="okClick" *ngIf="showOkButton" type="button">Ok</button>
+        <button class="btn" (click)="yesClick" *ngIf="showYesButton" type="button">Yes</button>
+        <button class="btn"(click)="noClick" *ngIf="showNoButton" type="button">No</button>
+        <button class="btn" (click)="cancelClick" *ngIf="showCancelButton" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
