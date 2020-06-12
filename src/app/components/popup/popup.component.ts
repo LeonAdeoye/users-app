@@ -22,7 +22,6 @@ export class PopupComponent implements OnInit
 
   constructor(public bsModalRef: BsModalRef)
   {
-
   }
 
   ngOnInit(): void
