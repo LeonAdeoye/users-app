@@ -19,11 +19,10 @@ export class PopupService
   {
     const initialState =
     {
-      width: 600,
       message: messageToDisplay,
       title: titleToDisplay,
       isErrorPopup: isErrorPopupFlag === null ? false : isErrorPopupFlag,
-      class: "modal-dialog modal-sm"
+      class: "modal-dialog modal-lg"
     };
 
     this.bsModalRef = this.modalService.show(PopupComponent, initialState);
@@ -37,7 +36,7 @@ export class PopupService
     {
       width: 600,
       height: 400,
-      title: "Desk Usage for " + deskName,
+      title: "Desk usage for " + deskName,
       isErrorPopup: false,
       class: "modal-dialog modal-lg"
     };
