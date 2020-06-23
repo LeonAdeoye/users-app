@@ -1,7 +1,19 @@
-<ag-grid-angular
-  style="width: 100%; height: 100%;"
-  class="ag-theme-balham"
-  [gridOptions]="deskUsageGridOptions"
-  (gridReady)="onGridReady($event)"
-  rowSelection="single">
-</ag-grid-angular>
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+    </div>
+    <div class="modal-body">
+      <ag-grid-angular
+      style="width: 500px; height: 500px;"
+      class="ag-theme-balham"
+      [gridOptions]="deskUsageGridOptions"
+      (gridReady)="onGridReady($event)"
+      rowSelection="single">
+      </ag-grid-angular>
+    </div>
+    <div class="modal-footer">
+      <div class="pull-right">
+      </div>
+    </div>
+  </div>
+</div>

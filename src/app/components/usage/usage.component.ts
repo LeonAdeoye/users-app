@@ -196,8 +196,8 @@ export class UsageComponent implements OnInit, OnDestroy
   public displayDeskUsage(row): void
   {
     this.usageService.setDeskDrilldown(row.node.data.deskName);
-    this.popupService.show("title", "message", true, true, true, true);
-    // this.popupService.showDeskUsage(row.node.data.deskName);
+    // this.popupService.show("title", "message", true, true, true, true);
+    this.popupService.showDeskUsage(row.node.data.deskName);
   }
 
   public autoFitColumns()

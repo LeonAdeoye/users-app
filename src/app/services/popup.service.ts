@@ -34,15 +34,14 @@ export class PopupService
   {
     const initialState =
     {
-      width: 600,
-      height: 400,
       title: "Desk usage for " + deskName,
+      message: "Desk usage for " + deskName,
       isErrorPopup: false,
       class: "modal-dialog modal-lg"
     };
 
     this.bsModalRef = this.modalService.show(DeskUsageComponent, { initialState, keyboard: false });
-    this.initialise(false, false, false, false);
+    this.initialise(true, true, true, true);
     return this.bsModalRef.content.answerSubject.pipe(take(1));
   }
 

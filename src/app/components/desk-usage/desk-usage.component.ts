@@ -12,13 +12,31 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   private deskDrilldown: string;
   public deskUsageGridOptions: GridOptions;
 
+
   constructor(private usageService: UsageService)
   {
     this.deskUsageGridOptions = {} as GridOptions;
+    this.deskUsageGridOptions.columnDefs = this.getColumnsDefinitions();
     this.usageService.deskDrilldownSubject.subscribe((deskDrilldown) =>
     {
       this.deskDrilldown = deskDrilldown;
     });
+  }
+
+  public getColumnsDefinitions(): any[]
+  {
+    // TODO
+    const columns = [
+      {
+        headerName: "deskName",
+        valueGetter: (params) => params.data.deskName,
+        sortable: true,
+        minWidth: 200,
+        width: 250
+      }
+    ];
+
+    return columns;
   }
 
   private refreshGrid()
