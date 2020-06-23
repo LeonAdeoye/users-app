@@ -53,7 +53,8 @@ import { ModalModule } from "ngx-bootstrap/modal";
   ],
   entryComponents:
   [
-    PopupComponent
+    PopupComponent,
+    DeskUsageComponent
   ],
   bootstrap:
   [
