@@ -11,6 +11,7 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 {
   private deskDrilldown: string;
   public deskUsageGridOptions: GridOptions;
+  public title;
 
 
   constructor(private usageService: UsageService)
@@ -25,14 +26,14 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
   public getColumnsDefinitions(): any[]
   {
-    // TODO
+    // TODO get the list of apps
     const columns = [
       {
-        headerName: "deskName",
+        headerName: "configuration-app",
         valueGetter: (params) => params.data.deskName,
         sortable: true,
         minWidth: 200,
-        width: 250
+        width: 200
       }
     ];
 
