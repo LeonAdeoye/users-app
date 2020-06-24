@@ -30,10 +30,14 @@ export class DeskUsageComponent implements OnInit, OnDestroy
     const columns = [
       {
         headerName: "configuration-app",
-        valueGetter: (params) => params.data.deskName,
         sortable: true,
-        minWidth: 200,
-        width: 200
+        minWidth: 160,
+        width: 160
+      },
+      {
+        headerName: "rfq-app",
+        minWidth: 160,
+        width: 160
       }
     ];
 
