@@ -62,7 +62,6 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
   ngOnDestroy(): void
   {
-    this.usageService.deskDrilldownSubject.unsubscribe();
   }
 
   ngOnInit(): void

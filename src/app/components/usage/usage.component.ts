@@ -23,7 +23,6 @@ export class UsageComponent implements OnInit, OnDestroy
   public contextMenuPosition = {x: "0px", y: "0px"};
   private usageServiceSubscription: Subscription;
   private gridSearchServiceSubscription: Subscription;
-  public detailRowHeight;
   public context;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private popupService: PopupService,
@@ -184,6 +183,7 @@ export class UsageComponent implements OnInit, OnDestroy
   ngOnDestroy(): void
   {
     this.log("Performing unsubscribe on existing subscriptions in the onDestroy hook method.", LogLevel.DEBUG);
+    // TODO
     this.usageServiceSubscription.unsubscribe();
     this.gridSearchServiceSubscription.unsubscribe();
   }
@@ -195,8 +195,6 @@ export class UsageComponent implements OnInit, OnDestroy
 
   public displayDeskUsage(row): void
   {
-    this.usageService.setDeskDrilldown(row.node.data.deskName);
-    // this.popupService.show("title", "message", true, true, true, true);
     this.popupService.showDeskUsage(row.node.data.deskName);
   }
 
