@@ -76,4 +76,9 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   ngOnInit(): void
   {
   }
+
+  public close()
+  {
+
+  }
 }

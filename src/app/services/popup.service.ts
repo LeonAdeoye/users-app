@@ -22,10 +22,10 @@ export class PopupService
       message: messageToDisplay,
       title: titleToDisplay,
       isErrorPopup: isErrorPopupFlag === null ? false : isErrorPopupFlag,
-      class: "modal-dialog-centered modal-lg"
+      class: "modal-lg"
     };
 
-    this.bsModalRef = this.modalService.show(PopupComponent, initialState);
+    this.bsModalRef = this.modalService.show(PopupComponent, { class: "modal-dialog-centered", initialState });
     this.initialise(yes, no, ok, cancel);
     return this.bsModalRef.content.answerSubject.pipe(take(1));
   }

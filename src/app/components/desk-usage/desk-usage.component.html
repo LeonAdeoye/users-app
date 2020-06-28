@@ -1,5 +1,9 @@
 <div class="modal-content">
-  <div class="modal-header">{{title}}</div>
+  <div class="modal-header">{{title}}
+    <button type="button" (click)="close()">
+      <span>&times;</span>
+    </button>
+  </div>
   <div class="modal-body">
     <ag-grid-angular
     style="width: 100%; height: 100%;"
