@@ -26,8 +26,14 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
   public getColumnsDefinitions(): any[]
   {
-    // TODO get the list of apps
+    // TODO get the list of apps programmatically
     const columns = [
+      {
+        headerName: "user",
+        sortable: true,
+        minWidth: 130,
+        width: 130
+      },
       {
         headerName: "configuration-app",
         sortable: true,
