@@ -26,26 +26,25 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
   public getColumnsDefinitions(): any[]
   {
-    // TODO get the list of apps programmatically
     const columns = [
       {
         headerName: "user",
         sortable: true,
         minWidth: 130,
         width: 130
-      },
+      }
+    ];
+
+    const apps = this.usageService.getUsageApps();
+
+    for(let index = 0; index < apps.length; ++index)
+      columns.push(
       {
-        headerName: "configuration-app",
+        headerName: apps[index],
         sortable: true,
         minWidth: 160,
         width: 160
-      },
-      {
-        headerName: "rfq-app",
-        minWidth: 160,
-        width: 160
-      }
-    ];
+      });
 
     return columns;
   }

@@ -22,7 +22,7 @@ export class PopupService
       message: messageToDisplay,
       title: titleToDisplay,
       isErrorPopup: isErrorPopupFlag === null ? false : isErrorPopupFlag,
-      class: "modal-dialog modal-lg"
+      class: "modal-dialog-centered modal-lg"
     };
 
     this.bsModalRef = this.modalService.show(PopupComponent, initialState);
@@ -34,10 +34,10 @@ export class PopupService
   {
     const initialState =
     {
-      class: "modal-dialog modal-lg"
+      class: "modal-lg"
     };
 
-    this.bsModalRef = this.modalService.show(DeskUsageComponent, { initialState, keyboard: false, backdrop: true });
+    this.bsModalRef = this.modalService.show(DeskUsageComponent, { class: "modal-dialog-centered", initialState, keyboard: false, backdrop: true });
     this.bsModalRef.content.title = "Desk usage for " + deskName;
     this.initialise(true, true, true, true);
     return this.bsModalRef.content.answerSubject.pipe(take(1));
