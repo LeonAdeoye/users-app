@@ -56,6 +56,11 @@ export class UserService
     return this.users;
   }
 
+  public getUsersDeskName(fullName: string): string
+  {
+    return this.users.find((elem) => fullName === elem.fullName).deskName;
+  }
+
   public invalidateUser(userId: string): void
   {
     this.log(`Invalidating user with user Id: ${userId}`, LogLevel.DEBUG);

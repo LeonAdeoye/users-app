@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GridOptions } from "ag-grid-community";
 import { UsageService } from "../../services/usage.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: "app-desk-usage",
@@ -14,13 +15,14 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   public title;
 
 
-  constructor(private usageService: UsageService)
+  constructor(private usageService: UsageService, private userService: UserService)
   {
     this.deskUsageGridOptions = {} as GridOptions;
     this.deskUsageGridOptions.columnDefs = this.getColumnsDefinitions();
     this.usageService.deskDrilldownSubject.subscribe((deskDrilldown) =>
     {
       this.deskDrilldown = deskDrilldown;
+      // TODO refresh grid
     });
   }
 
@@ -55,7 +57,36 @@ export class DeskUsageComponent implements OnInit, OnDestroy
     const itemsToRemove = [];
     const itemsToAdd = [];
 
-    // TODO
+    const allUsageList = this.usageService.getAllUsage();
+    for (let index = 0; index < allUsageList.length; ++index)
+    {
+      const currentUsage = allUsageList[index];
+      if(this.userService.getUsersDeskName(currentUsage.user) === this.deskDrilldown)
+      {
+        const usageUpdateRowNode = this.deskUsageGridOptions.api.getRowNode(currentUsage.id);
+
+        if (usageUpdateRowNode)
+          itemsToUpdate.push(currentUsage);
+        else
+          itemsToAdd.push(currentUsage);
+      }
+    }
+
+    // this.deskUsageGridOptions.api.forEachNode((currentRow) =>
+    // {
+    //   let foundMatchingRow = false;
+    //   for (let index = 0; index < allUsageList.length; ++index)
+    //   {
+    //     if (currentRow.data.deskName === allUsageList[index].deskName)
+    //     {
+    //       foundMatchingRow = true;
+    //       break;
+    //     }
+    //   }
+    //
+    //   if (!foundMatchingRow)
+    //     itemsToRemove.push(currentRow.data);
+    // });
 
     this.deskUsageGridOptions.api.updateRowData({remove: itemsToRemove});
     this.deskUsageGridOptions.api.updateRowData({update: itemsToUpdate});

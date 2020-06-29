@@ -15,7 +15,6 @@ import { Usage } from "../models/usage";
 export class UsageService
 {
   private usageMap = new Map<string, Array<Usage>>();
-  private usageApps = new Array<string>();
   private usage = new Array<Usage>();
   public deskDrilldownSubject: Subject<string>;
 
@@ -93,7 +92,12 @@ export class UsageService
 
   public getAllUsage(): Array<Usage>
   {
-    return this.usage;
+    let result = new Array<Usage>();
+
+    for (const entry of this.usageMap.entries())
+      result = result.concat(entry[1]);
+
+    return result;
   }
 
   public getUsageApps(): Array<string>
