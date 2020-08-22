@@ -60,7 +60,7 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   private refreshGrid()
   {
     const allUsageList = this.usageService.getAllUsage();
-    const mapOfUsers = new Map<string, any>()
+    const mapOfUsers = new Map<string, any>();
 
     for (const currentUsage of allUsageList)
     {
@@ -69,12 +69,12 @@ export class DeskUsageComponent implements OnInit, OnDestroy
         if(mapOfUsers.has(currentUsage.user))
         {
           const user = mapOfUsers.get(currentUsage.user);
-          user[currentUsage.app] = 5;
+          user[currentUsage.app] = currentUsage.monthlyCount[new Date().getMonth()];
         }
         else
         {
           const user = {user: currentUsage.user};
-          user[currentUsage.app] = 10;
+          user[currentUsage.app] = currentUsage.monthlyCount[new Date().getMonth()];
           mapOfUsers.set(currentUsage.user, user);
         }
       }
