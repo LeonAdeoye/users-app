@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GridOptions } from "ag-grid-community";
 import { UsageService } from "../../services/usage.service";
 import { UserService } from "../../services/user.service";
+import { Answer } from "../../models/types";
+import { Subject } from "rxjs";
+import { BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-desk-usage",
@@ -13,16 +16,17 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   private deskDrilldown: string;
   public deskUsageGridOptions: GridOptions;
   public title;
+  public answerSubject: Subject<Answer>;
 
-
-  constructor(private usageService: UsageService, private userService: UserService)
+  constructor(private usageService: UsageService, private userService: UserService, private modalReference: BsModalRef)
   {
     this.deskUsageGridOptions = {} as GridOptions;
     this.deskUsageGridOptions.columnDefs = this.getColumnsDefinitions();
     this.usageService.deskDrilldownSubject.subscribe((deskDrilldown) =>
     {
+      // TODO
       this.deskDrilldown = deskDrilldown;
-      // TODO refresh grid
+      this.refreshGrid();
     });
   }
 
@@ -97,19 +101,21 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
   public onGridReady(event): void
   {
-    this.refreshGrid();
+    if(this.deskDrilldown)
+      this.refreshGrid();
   }
 
-  ngOnDestroy(): void
+  public ngOnDestroy(): void
   {
   }
 
-  ngOnInit(): void
+  public ngOnInit(): void
   {
   }
 
-  public close()
+  public close(): void
   {
-
+    this.answerSubject.next(Answer.OK);
+    this.modalReference.hide();
   }
 }
