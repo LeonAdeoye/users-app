@@ -13,7 +13,7 @@ import { BsModalRef } from "ngx-bootstrap/modal";
 })
 export class DeskUsageComponent implements OnInit, OnDestroy
 {
-  private deskDrilldown: string;
+  public deskDrilldown: string;
   public deskUsageGridOptions: GridOptions;
   public title;
   public answerSubject: Subject<Answer>;
@@ -22,12 +22,10 @@ export class DeskUsageComponent implements OnInit, OnDestroy
   {
     this.deskUsageGridOptions = {} as GridOptions;
     this.deskUsageGridOptions.columnDefs = this.getColumnsDefinitions();
-    this.usageService.deskDrilldownSubject.subscribe((deskDrilldown) =>
+    this.deskUsageGridOptions.getRowNodeId = (row) =>
     {
-      // TODO
-      this.deskDrilldown = deskDrilldown;
-      this.refreshGrid();
-    });
+      return row.id;
+    };
   }
 
   public getColumnsDefinitions(): any[]
@@ -35,6 +33,7 @@ export class DeskUsageComponent implements OnInit, OnDestroy
     const columns = [
       {
         headerName: "user",
+        field: "user",
         sortable: true,
         minWidth: 130,
         width: 130
@@ -43,66 +42,53 @@ export class DeskUsageComponent implements OnInit, OnDestroy
 
     const apps = this.usageService.getUsageApps();
 
-    for(let index = 0; index < apps.length; ++index)
+    for(const app of apps)
+    {
       columns.push(
-      {
-        headerName: apps[index],
-        sortable: true,
-        minWidth: 160,
-        width: 160
-      });
+        {
+          headerName: app,
+          field: app,
+          sortable: true,
+          minWidth: 160,
+          width: 160
+        });
+    }
 
     return columns;
   }
 
   private refreshGrid()
   {
-    const itemsToUpdate = [];
-    const itemsToRemove = [];
-    const itemsToAdd = [];
-
     const allUsageList = this.usageService.getAllUsage();
-    for (let index = 0; index < allUsageList.length; ++index)
+    const mapOfUsers = new Map<string, any>()
+
+    for (const currentUsage of allUsageList)
     {
-      const currentUsage = allUsageList[index];
       if(this.userService.getUsersDeskName(currentUsage.user) === this.deskDrilldown)
       {
-        const usageUpdateRowNode = this.deskUsageGridOptions.api.getRowNode(currentUsage.id);
-
-        if (usageUpdateRowNode)
-          itemsToUpdate.push(currentUsage);
+        if(mapOfUsers.has(currentUsage.user))
+        {
+          const user = mapOfUsers.get(currentUsage.user);
+          user[currentUsage.app] = 5;
+        }
         else
-          itemsToAdd.push(currentUsage);
+        {
+          const user = {user: currentUsage.user};
+          user[currentUsage.app] = 10;
+          mapOfUsers.set(currentUsage.user, user);
+        }
       }
     }
 
-    // this.deskUsageGridOptions.api.forEachNode((currentRow) =>
-    // {
-    //   let foundMatchingRow = false;
-    //   for (let index = 0; index < allUsageList.length; ++index)
-    //   {
-    //     if (currentRow.data.deskName === allUsageList[index].deskName)
-    //     {
-    //       foundMatchingRow = true;
-    //       break;
-    //     }
-    //   }
-    //
-    //   if (!foundMatchingRow)
-    //     itemsToRemove.push(currentRow.data);
-    // });
-
-    this.deskUsageGridOptions.api.updateRowData({remove: itemsToRemove});
-    this.deskUsageGridOptions.api.updateRowData({update: itemsToUpdate});
-
-    for (let index = 0; index < itemsToAdd.length; ++index)
-      this.deskUsageGridOptions.api.updateRowData({add: [itemsToAdd[index]], addIndex: index});
+    let index = 0;
+    for(const [, value] of mapOfUsers)
+      this.deskUsageGridOptions.api.updateRowData({add: [value], addIndex: index++});
   }
 
-  public onGridReady(event): void
+  public onGridReady(param): void
   {
-    if(this.deskDrilldown)
-      this.refreshGrid();
+    this.deskUsageGridOptions.api = param.api;
+    this.refreshGrid();
   }
 
   public ngOnDestroy(): void

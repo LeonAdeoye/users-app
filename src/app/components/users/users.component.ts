@@ -134,9 +134,8 @@ export class UsersComponent implements OnInit, OnDestroy
     const itemsToAdd = [];
 
     const users = this.userService.getAllUsers();
-    for(let index = 0; index < users.length; ++index)
+    for(const user of users)
     {
-      const user = users[index];
       const userUpdateRowNode = this.usersGridOptions.api.getRowNode(user.id);
 
       if(userUpdateRowNode)
@@ -148,9 +147,9 @@ export class UsersComponent implements OnInit, OnDestroy
     this.usersGridOptions.api.forEachNode((currentRow) =>
     {
       let foundMatchingRow = false;
-      for(let index = 0; index < users.length; ++index)
+      for(const user of users)
       {
-        if(currentRow.data.id === users[index].id)
+        if(currentRow.data.id === user.id)
         {
           foundMatchingRow = true;
           break;
