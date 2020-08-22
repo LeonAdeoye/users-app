@@ -15,8 +15,6 @@ import { Usage } from "../models/usage";
 export class UsageService
 {
   private usageMap = new Map<string, Array<Usage>>();
-  private usage = new Array<Usage>();
-  public deskDrilldownSubject: Subject<string>;
 
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;
@@ -24,12 +22,6 @@ export class UsageService
   constructor(private messageService: MessageService, private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
     this.usersServiceURLBase = this.configurationService.getConfigurationValue("system", "users-service.url", "http://localhost:20003");
-    this.deskDrilldownSubject = new Subject<string>();
-  }
-
-  public setDeskDrilldown(deskName: string): void
-  {
-    this.deskDrilldownSubject.next(deskName);
   }
 
   private log(message: string, logLevel?: LogLevel): void
