@@ -37,7 +37,7 @@ export class PopupService
       class: "modal-lg"
     };
 
-    this.bsModalRef = this.modalService.show(DeskUsageComponent, { initialState, keyboard: false, backdrop: true });
+    this.bsModalRef = this.modalService.show(DeskUsageComponent, { class: "modal-dialog-centered", initialState, keyboard: false, backdrop: true });
     this.bsModalRef.content.title = "Desk usage for " + deskName;
     this.bsModalRef.content.deskDrilldown = deskName;
     this.initialise(true, true, true, true);
