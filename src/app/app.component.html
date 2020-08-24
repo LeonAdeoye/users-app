@@ -1,8 +1,8 @@
 <div>
   <app-main-header></app-main-header>
-  <!--<div class="user-detail-panel" *ngIf="isUserDetailPanelVisible()">-->
-    <!--<app-user-detail [user]="user" (closePanelEventEmitter)="toggleUserDetailPanelVisibility()"></app-user-detail>-->
-  <!--</div>-->
+  <div class="user-detail-panel" *ngIf="isUserDetailPanelVisible()">
+    <app-user-detail [user]="user" (closePanelEventEmitter)="toggleUserDetailPanelVisibility()"></app-user-detail>
+  </div>
 
   <div class="tab-background">
     <ul class="nav nav-tabs">

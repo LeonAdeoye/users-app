@@ -18,6 +18,7 @@ export class UserService
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   public editUserSubject = new Subject<User>();
   public cloneUserSubject = new Subject<User>();
+  public addUserSubject = new Subject<User>();
   private readonly usersServiceURLBase: string;
 
   constructor(private loggingService: LoggingService, private messageService: MessageService, private configurationService: ConfigurationService)

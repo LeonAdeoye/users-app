@@ -188,6 +188,8 @@ export class UsersComponent implements OnInit, OnDestroy
     const selectedUser: User = this.getSelectedUser();
     if(selectedUser)
       this.userService.editUserSubject.next(selectedUser);
+
+    this.usageService.saveUsage("added user");
   }
 
   public invalidateUser(): void
@@ -195,6 +197,8 @@ export class UsersComponent implements OnInit, OnDestroy
     const selectedUser: User = this.getSelectedUser();
     if(selectedUser)
       this.userService.invalidateUser(selectedUser.userId);
+
+    this.usageService.saveUsage("invalidated user");
   }
 
   public refreshUsers(): void
@@ -207,5 +211,16 @@ export class UsersComponent implements OnInit, OnDestroy
     const selectedUser: User = this.getSelectedUser();
     if(selectedUser)
       this.userService.cloneUserSubject.next(selectedUser);
+
+    this.usageService.saveUsage("cloned user");
+  }
+
+  public editUser(): void
+  {
+    const selectedUser: User = this.getSelectedUser();
+    if(selectedUser)
+      this.userService.editUserSubject.next(selectedUser);
+
+    this.usageService.saveUsage("edit user");
   }
 }

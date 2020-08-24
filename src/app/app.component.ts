@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { BootstrapService } from "./services/bootstrap.service";
 import { LoggingService } from "./services/logging.service";
 import { LogLevel } from "./models/types";
-import { ConfigurationService } from "./services/configuration.service";
-import { Configuration } from "./models/configuration";
 import { Constants } from "./models/constants";
+import { UserService } from "./services/user.service";
+import { User } from "./models/user";
 
 
 @Component({
@@ -19,13 +19,13 @@ export class AppComponent
   public selectedTab = "Users";
   public tabs = ["Users", "Usage"];
 
-  configuration: Configuration;
+  user: User;
 
-  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
+  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private userService: UserService)
   {
-    this.configurationService.editConfigurationSubject.subscribe((configuration) => this.editConfiguration(configuration));
-    this.configurationService.cloneConfigurationSubject.subscribe((configuration) => this.cloneConfiguration(configuration));
-    this.configurationService.addConfigurationSubject.subscribe(() => this.addConfiguration());
+    this.userService.editUserSubject.subscribe((user) => this.editUser(user));
+    this.userService.cloneUserSubject.subscribe((user) => this.cloneUser(user));
+    this.userService.addUserSubject.subscribe(() => this.addUser());
   }
 
   public isUserDetailPanelVisible(): boolean
@@ -43,23 +43,24 @@ export class AppComponent
     this.loggingService.log("AppComponent", message, logLevel);
   }
 
-  private addConfiguration(): void
+  private addUser(): void
   {
-    this.configuration = new Configuration();
+    this.log(`Adding new user`, LogLevel.DEBUG);
+    this.user = new User();
     this.toggleUserDetailPanelVisibility();
   }
 
-  private editConfiguration(configuration: Configuration): void
+  private editUser(user: User): void
   {
-    this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-    this.configuration = configuration;
+    this.log(`Editing selected user: ${JSON.stringify(user)}`, LogLevel.DEBUG);
+    this.user = user;
     this.toggleUserDetailPanelVisibility();
   }
 
-  private cloneConfiguration(configuration: Configuration): void
+  private cloneUser(user: User): void
   {
-    this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-    this.configuration = configuration;
+    this.log(`Cloning selected user: ${JSON.stringify(user)}`, LogLevel.DEBUG);
+    this.user = user;
     this.toggleUserDetailPanelVisibility();
   }
 
