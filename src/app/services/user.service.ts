@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { UtilityService } from "./utility.service";
 import { User } from "../models/user";
 import { ConfigurationService } from "./configuration.service";
+import { Configuration } from "../models/configuration";
 
 @Injectable({
   providedIn: "root"
@@ -15,6 +16,8 @@ export class UserService
 {
   private users = Array<User>();
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
+  public editUserSubject = new Subject<User>();
+  public cloneUserSubject = new Subject<User>();
   private readonly usersServiceURLBase: string;
 
   constructor(private loggingService: LoggingService, private messageService: MessageService, private configurationService: ConfigurationService)

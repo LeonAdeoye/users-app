@@ -186,9 +186,8 @@ export class UsersComponent implements OnInit, OnDestroy
   public addUser(): void
   {
     const selectedUser: User = this.getSelectedUser();
-    // TODO
-    // if(selectedUser)
-    //   this.configurationService.editConfigurationSubject.next(selectedUser);
+    if(selectedUser)
+      this.userService.editUserSubject.next(selectedUser);
   }
 
   public invalidateUser(): void
@@ -206,8 +205,7 @@ export class UsersComponent implements OnInit, OnDestroy
   public cloneUser(): void
   {
     const selectedUser: User = this.getSelectedUser();
-    // TODO
-    // if(selectedUser)
-    //   this.configurationService.cloneConfigurationSubject.next(selectedUser);
+    if(selectedUser)
+      this.userService.cloneUserSubject.next(selectedUser);
   }
 }
