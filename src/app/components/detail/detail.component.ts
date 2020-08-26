@@ -52,15 +52,19 @@ export class DetailComponent implements OnInit
   {
     return UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.fullName)
       || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.deskName)
-      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.userId);
-    // TODO
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.userId)
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.region)
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.countryCode)
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.location);
   }
 
   public canSave(): boolean
   {
     return UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.fullName)
       && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.deskName)
-      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.userId);
-    // TODO
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.userId)
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.region)
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.countryCode)
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.user.location);
   }
 }

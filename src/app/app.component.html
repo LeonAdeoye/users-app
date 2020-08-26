@@ -3,7 +3,6 @@
   <div class="user-detail-panel" *ngIf="isUserDetailPanelVisible()">
     <app-user-detail [user]="user" (closePanelEventEmitter)="toggleUserDetailPanelVisibility()"></app-user-detail>
   </div>
-
   <div class="tab-background">
     <ul class="nav nav-tabs">
       <li class="btn btn-default tab-button" *ngFor="let tab of tabs" [class.active]="tab === selectedTab" (click)="onSelect(tab)">

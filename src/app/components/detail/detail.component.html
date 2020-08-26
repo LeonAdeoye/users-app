@@ -11,6 +11,18 @@
     <mat-label>User ID</mat-label>
     <input matInput placeholder="Enter the user's ID..." [(ngModel)]="user.userId" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
+  <mat-form-field appearance="outline" class="detail-panel-widget">
+    <mat-label>Country code</mat-label>
+    <input matInput placeholder="Enter the country code..." [(ngModel)]="user.countryCode" [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="detail-panel-widget">
+    <mat-label>Location</mat-label>
+    <input matInput placeholder="Enter the location..." [(ngModel)]="user.location" [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="detail-panel-widget">
+    <mat-label>Region</mat-label>
+    <input matInput placeholder="Enter the region..." [(ngModel)]="user.region" [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
 </form>
 <button class="detail-button first-widget" type="button" mat-raised-button (click)="cancel()">Cancel</button>
 <button class="detail-button" type="button" mat-raised-button (click)="clear()" *ngIf="canClear()">Clear</button>
