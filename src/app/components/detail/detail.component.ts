@@ -44,7 +44,6 @@ export class DetailComponent implements OnInit
 
   public cancel(): void
   {
-
     this.closePanelEventEmitter.emit();
   }
 

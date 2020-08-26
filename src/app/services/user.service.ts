@@ -7,7 +7,6 @@ import { Subject } from "rxjs";
 import { UtilityService } from "./utility.service";
 import { User } from "../models/user";
 import { ConfigurationService } from "./configuration.service";
-import { Configuration } from "../models/configuration";
 
 @Injectable({
   providedIn: "root"
