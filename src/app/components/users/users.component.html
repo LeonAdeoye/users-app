@@ -1,7 +1,7 @@
 <div class="menu-trigger" [matMenuTriggerFor]="menu" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y"></div>
 <mat-menu #menu="matMenu">
   <button class="context-menu-button" mat-menu-item (click)="addUser()">Add user</button>
-  <button class="context-menu-button" mat-menu-item (click)="invalidateUser()">Invalidate user</button>
+  <button class="context-menu-button" mat-menu-item (click)="toggleValidity()">Toggle validity</button>
   <button class="context-menu-button" mat-menu-item (click)="cloneUser()">Clone user</button>
   <button class="context-menu-button" mat-menu-item (click)="editUser()">Edit user</button>
   <button class="context-menu-button" mat-menu-item (click)="refreshUsers()">Refresh users</button>

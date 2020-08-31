@@ -64,22 +64,11 @@ export class UserService
     return this.users.find((elem) => fullName === elem.fullName).deskName;
   }
 
-  public invalidateUser(userId: string): void
+  public toggleValidity(user: User): void
   {
-    this.log(`Invalidating user with user Id: ${userId}`, LogLevel.DEBUG);
-    const message = new Message(`${this.usersServiceURLBase}/user?userId=${userId}`, null, MessageTransport.HTTP, MessageMethod.DELETE);
-    this.messageService.send(message).subscribe(
-      (result) =>
-      {
-        if (result)
-          this.log(`result: ${result}`, LogLevel.DEBUG);
-        this.loadAllUsers();
-      },
-      (error) =>
-      {
-        if (error)
-          this.log(`${error.message}`, LogLevel.ERROR);
-      });
+    this.log(`Toggling the validity of user with user Id: ${user.userId} and then saving it.`, LogLevel.DEBUG);
+    user.isActive = !user.isActive;
+    this.saveUser(user);
   }
 
   public saveUser(user: User): void

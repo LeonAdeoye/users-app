@@ -185,18 +185,18 @@ export class UsersComponent implements OnInit, OnDestroy
 
   public addUser(): void
   {
-    this.userService.addUserSubject.next(null);
+    this.userService.addUserSubject.next();
 
     this.usageService.saveUsage("added user");
   }
 
-  public invalidateUser(): void
+  public toggleValidity(): void
   {
     const selectedUser: User = this.getSelectedUser();
     if(selectedUser)
-      this.userService.invalidateUser(selectedUser.userId);
+      this.userService.toggleValidity(selectedUser);
 
-    this.usageService.saveUsage("invalidated user");
+    this.usageService.saveUsage("toggle user's validity");
   }
 
   public refreshUsers(): void

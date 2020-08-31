@@ -36,7 +36,7 @@ export class User
     this._region = region || "";
     this._countryCode = countryCode || "";
     this._id = id;
-    this._isActive = isActive || false;
+    this._isActive = isActive || true;
   }
 
   public toString(): string
