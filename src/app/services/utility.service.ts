@@ -26,4 +26,9 @@ export class UtilityService
   {
     return value === undefined || value === null;
   }
+
+  public static isBoolean(variable)
+  {
+    return typeof variable === "boolean";
+  }
 }

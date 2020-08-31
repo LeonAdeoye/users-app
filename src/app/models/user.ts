@@ -1,4 +1,5 @@
 import { JsonConvert, JsonObject, JsonProperty, ValueCheckingMode } from "json2typescript";
+import { UtilityService } from "../services/utility.service";
 
 @JsonObject
 export class User
@@ -36,7 +37,15 @@ export class User
     this._region = region || "";
     this._countryCode = countryCode || "";
     this._id = id;
-    this._isActive = isActive || true;
+    if(isActive && UtilityService.isBoolean(isActive))
+      this._isActive = isActive
+    else
+      this._isActive = true;
+  }
+
+  public static clone(user: User): User
+  {
+    return new User(user.fullName, user.userId, user.deskName, user.location, user.countryCode, user.id, user.region, user.isActive);
   }
 
   public toString(): string

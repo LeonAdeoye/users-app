@@ -60,7 +60,8 @@ export class AppComponent
   private cloneUser(user: User): void
   {
     this.log(`Cloning selected user: ${JSON.stringify(user)}`, LogLevel.DEBUG);
-    this.user = user;
+    this.user = User.clone(user);
+    this.user.id = null;
     this.toggleUserDetailPanelVisibility();
   }
 
