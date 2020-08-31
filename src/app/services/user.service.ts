@@ -74,7 +74,7 @@ export class UserService
   public saveUser(user: User): void
   {
     this.log(`Saving user: ${user}`, LogLevel.DEBUG);
-    const message = new Message(`${this.usersServiceURLBase}/user`, user.toJSON(), MessageTransport.HTTP, UtilityService.isNullOrEmptyOrBlankOrUndefined(user.userId) ? MessageMethod.POST : MessageMethod.PUT);
+    const message = new Message(`${this.usersServiceURLBase}/user`, user.toJSON(), MessageTransport.HTTP, UtilityService.isNullOrEmptyOrBlankOrUndefined(user.id) ? MessageMethod.POST : MessageMethod.PUT);
 
     this.messageService.send(message).subscribe(
       (result) =>
