@@ -48,19 +48,6 @@ describe('MainHeaderComponent', () =>
     expect(component).toBeTruthy();
   });
 
-  describe('addConfiguration', () =>
-  {
-    it('should call configuration service addConfigurationSubject next', inject([ConfigurationService], (configurationService) =>
-    {
-      // Arrange
-      spyOn(configurationService.addConfigurationSubject, 'next');
-      // Act
-      component.addConfiguration();
-      // Assert
-      expect(configurationService.addConfigurationSubject.next).toHaveBeenCalled();
-    }));
-  });
-
   describe('refreshConfigurations', () =>
   {
     it('should call configuration service loadAllConfigurations', inject([ConfigurationService], (configurationService) =>
