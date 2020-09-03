@@ -77,7 +77,7 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [
-      true,
+      false,
       "double"
     ],
     "one-line": [
