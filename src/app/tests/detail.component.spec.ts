@@ -4,12 +4,16 @@ import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ConfigurationServiceMock } from "./mock-configuration.service";
-import { Configuration } from "../models/configuration";
+import { User } from "../models/user";
+import { UserService } from "../services/user.service";
+import { UsageService } from "../services/usage.service";
 
 describe('DetailComponent', () =>
 {
   let component: DetailComponent;
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
+  const spyUserService = jasmine.createSpyObj('UserService', ['saveUser']);
+  const spyUsageService = jasmine.createSpyObj('UsageService', ['saveUsage']);
   let fixture: ComponentFixture<DetailComponent>;
 
   beforeEach(async(() =>
@@ -26,6 +30,8 @@ describe('DetailComponent', () =>
       providers:
       [
         { provide: ConfigurationService, useClass: ConfigurationServiceMock },
+        { provide: UserService, useValue: spyUserService },
+        { provide: UsageService, useValue: spyUsageService },
         { provide: LoggingService, useValue: spyLoggingService }
       ]
     })
@@ -45,129 +51,156 @@ describe('DetailComponent', () =>
 
   describe('canClear', () =>
   {
-    it('should return false when @Input configuration is not set', () =>
+    it('should return false when @Input user is not set', () =>
     {
       // Act
-      let result = component.canClear();
+      const result = component.canClear();
       // Assert
       expect(result).not.toBeTruthy();
     });
 
-    it('should return false when owner, key, and value of @Input configuration are not set', () =>
+    it('should still return true when only full name attribute of @Input user is set', () =>
     {
       // Arrange
-      component.configuration = new Configuration(null, null, null, "Papa", "now", "20121223");
+      component.user = new User("Horatio Adeoye", null, null, null, null, null);
       // Act
-      let result = component.canClear();
+      const result = component.canClear();
+      // Assert
+      expect(result).toBeTruthy();
+    });
+
+    it('should still return true when only user ID attribute of @Input user is set', () =>
+    {
+      // Arrange
+      component.user = new User(null, "horaminho", null, null, null, null);
+      // Act
+      const result = component.canClear();
+      // Assert
+      expect(result).toBeTruthy();
+    });
+
+    it('should return false when none of the attributes of @Input configuration are set', () =>
+    {
+      // Arrange
+      component.user = new User(null, null, null, null, null, null);
+      // Act
+      const result = component.canClear();
       // Assert
       expect(result).not.toBeTruthy();
-    });
-
-    it('should return true when only value of @Input configuration is set', () =>
-    {
-      // Arrange
-      component.configuration = new Configuration("Horatio", "Surname", null, "Papa", "now", "20121223");
-      // Act
-      let result = component.canClear();
-      // Assert
-      expect(result).toBeTruthy();
-    });
-
-    it('should return false when only key of @Input configuration is set', () =>
-    {
-      // Arrange
-      component.configuration = new Configuration(null, "Surname", null, "Papa", "now", "20121223");
-      // Act
-      let result = component.canClear();
-      // Assert
-      expect(result).toBeTruthy();
-    });
-
-    it('should return false when only owner of @Input configuration is set', () =>
-    {
-      // Arrange
-      component.configuration = new Configuration("Harper", null, null, "Papa", "now", "20121223");
-      // Act
-      let result = component.canClear();
-      // Assert
-      expect(result).toBeTruthy();
     });
   });
 
   describe('canSave', () =>
   {
-    it('should return false when @input configuration is not set', () =>
+    it('should return false when @input user is not set', () =>
     {
       // Act
-      let result = component.canSave();
+      const result = component.canSave();
       // Assert
       expect(result).not.toBeTruthy();
     });
 
-    it('should return true when owner, key and value of @Input configuration are set', () =>
+    it('should return true only when all attributes of @Input user are set', () =>
     {
       // Arrange
-      component.configuration = new Configuration("Horatio", "Surname", "Adeoye", "Papa", "now", "20121223");
+      component.user = new User("Horatio Adeoye", "horaminho", "LFC", "Hong Kong", "HK", "20121223",  "Asia", false);
       // Act
-      let result = component.canSave();
+      const result = component.canSave();
       // Assert
       expect(result).toBeTruthy();
     });
 
-    it('should return false when value of @Input configuration is not set', () =>
+    it('should return false when the desk name of @Input user is not set', () =>
     {
       // Arrange
-      component.configuration = new Configuration("Horatio", "Surname", null, "Papa", "now", "20121223");
+      component.user = new User("Horatio", "Surname", null, "Papa", "now", "20121223");
       // Act
-      let result = component.canSave();
+      const result = component.canSave();
       // Assert
       expect(result).not.toBeTruthy();
     });
 
-    it('should return false when key of @Input configuration is not set', () =>
+    it('should return false when the userId of @Input user is not set', () =>
     {
       // Arrange
-      component.configuration = new Configuration("Horatio", null, "Adeoye", "Papa", "now", "20121223");
+      component.user = new User("Horatio Adeoye", null, "LFC", "Hong Kong", "HK", "20121223");
       // Act
-      let result = component.canSave();
+      const result = component.canSave();
       // Assert
       expect(result).not.toBeTruthy();
     });
 
-    it('should return false when owner of @Input configuration is not set', () =>
+    it('should return false when the desk name attribute of @Input configuration is not set', () =>
     {
       // Arrange
-      component.configuration = new Configuration(null, "Surname", "Adeoye", "Papa", "now", "20121223");
+      component.user = new User("Horatio Adeoye", "horaminho", null, "Hong Kong", "HK", "20121223");
       // Act
-      let result = component.canSave();
+      const result = component.canSave();
       // Assert
       expect(result).not.toBeTruthy();
     });
+
+    it('should return false when the location attribute of @Input configuration is not set', () =>
+    {
+      // Arrange
+      component.user = new User("Horatio Adeoye", "horaminho", "LFC", null, "HK", "20121223");
+      // Act
+      const result = component.canSave();
+      // Assert
+      expect(result).not.toBeTruthy();
+    });
+
+    it('should return false when the country code attribute of @Input configuration is not set', () =>
+    {
+      // Arrange
+      component.user = new User("Horatio Adeoye", "horaminho", "LFC", "Hong Kong", null, "20121223");
+      // Act
+      const result = component.canSave();
+      // Assert
+      expect(result).not.toBeTruthy();
+    });
+
+    it('should return false when the ID attribute of @Input configuration is not set', () =>
+    {
+      // Arrange
+      component.user = new User("Horatio Adeoye", "horaminho", "LFC", "Hong Kong", "HK", null);
+      // Act
+      const result = component.canSave();
+      // Assert
+      expect(result).not.toBeTruthy();
+    });
+
   });
 
   describe('save', () =>
   {
-    it('should call configuration service saveConfiguration', inject([ConfigurationService], (configurationService) =>
+    it('should call user service saveUser', inject([UserService], (userService) =>
     {
-      // Arrange
-      spyOn(configurationService, 'saveConfiguration');
       // Act
       component.save();
       // Assert
-      expect(configurationService.saveConfiguration).toHaveBeenCalled();
+      expect(userService.saveUser).toHaveBeenCalled();
+    }));
+
+    it('should call usage service saveUsage', inject([UsageService], (usageService) =>
+    {
+      // Act
+      component.save();
+      // Assert
+      expect(usageService.saveUsage).toHaveBeenCalled();
     }));
   });
 
   describe('clear', () =>
   {
-    it('should clear configuration @Input member variable', () =>
+    it('should clear user @Input member variable', () =>
     {
       // Arrange
-      component.configuration = new Configuration("Harper", "Surname", "Adeoye", "Papa", "now", "20121223");
+      component.user = new User("Harper Adeoye", "principessa", "DMS", "Hong Kong", "HK", "20121223");
       // Act
       component.clear();
       // Assert
-      expect(component.configuration).toEqual(new Configuration());
+      expect(component.user).toEqual(new User());
     });
   });
 
