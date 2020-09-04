@@ -7,16 +7,16 @@ import { UserService } from "../services/user.service";
 import { UsageService } from "../services/usage.service";
 import { LoggingService } from "../services/logging.service";
 import { PopupService } from "../services/popup.service";
+import { UsageServiceMock } from "./mock-usage.service";
+import { UserServiceMock } from "./mock-user.service";
+import { MatMenuModule } from "@angular/material/menu";
 
 describe("UsageComponent", () =>
 {
   let component: UsageComponent;
   let fixture: ComponentFixture<UsageComponent>;
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
-  const spyUserService = jasmine.createSpyObj('UserService', ['getUniqueDesks', 'getAllUsers']);
-  const spyUsageService = jasmine.createSpyObj('UsageService', ['getUsageApps']);
   const spyPopupService = jasmine.createSpyObj('PopupService', ['showDeskUsage', 'show']);
-  spyUsageService.getUsageApps.and.returnValue([]);
 
   beforeEach(async(() =>
   {
@@ -25,11 +25,15 @@ describe("UsageComponent", () =>
         [
           UsageComponent
         ],
+      imports:
+        [
+          MatMenuModule
+        ],
       providers:
         [
           { provide: ConfigurationService, useClass: ConfigurationServiceMock },
-          { provide: UserService, useValue: spyUserService },
-          { provide: UsageService, useValue: spyUsageService },
+          { provide: UserService, useClass: UserServiceMock },
+          { provide: UsageService, useClass: UsageServiceMock },
           { provide: LoggingService, useValue: spyLoggingService },
           { provide: PopupService, useValue: spyPopupService }
         ],

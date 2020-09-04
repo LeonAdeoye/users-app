@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-
 import { MessageService } from "./message.service";
 import { Message } from "../models/message";
 import { ConfigurationService } from "./configuration.service";
@@ -15,7 +14,6 @@ import { Usage } from "../models/usage";
 export class UsageService
 {
   private usageMap = new Map<string, Array<Usage>>();
-
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   private readonly usersServiceURLBase: string;
 
