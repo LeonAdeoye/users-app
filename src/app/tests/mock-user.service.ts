@@ -1,0 +1,18 @@
+import { Subject } from "rxjs";
+import { ServiceUpdate } from "../models/types";
+import { User } from "../models/user";
+
+export class UserServiceMock
+{
+  public serviceUpdateSubject = new Subject<ServiceUpdate>();
+
+  public getAllUsers(): Array<User>
+  {
+    return [];
+  }
+
+  public getUniqueDesks(): Array<User>
+  {
+    return [];
+  }
+}
