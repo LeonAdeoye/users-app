@@ -11,6 +11,10 @@ export class UserServiceMock
     return [];
   }
 
+  public loadAllUsers(): void
+  {
+  }
+
   public getUniqueDesks(): Array<User>
   {
     return [];

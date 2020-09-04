@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { UsersComponent } from "../components/users/users.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ConfigurationService } from "../services/configuration.service";
@@ -55,5 +55,18 @@ describe("UsersComponent", () =>
   it("should create", () =>
   {
     expect(component).toBeTruthy();
+  });
+
+  describe('refreshUsers', () =>
+  {
+    it('should call loadAllUsers of the user service', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(userService, 'loadAllUsers');
+      // Act
+      component.refreshUsers();
+      // Assert
+      expect(userService.loadAllUsers).toHaveBeenCalled();
+    }));
   });
 });
