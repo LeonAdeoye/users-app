@@ -12,7 +12,7 @@ describe('BootstrapService', () =>
   const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations', 'getAllConfigurations','setCurrentUser', 'getCurrentUser']);
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log', 'initialize']);
   const spyUserService = jasmine.createSpyObj('UserService', ['loadAllUsers', 'getAllUsers']);
-  const spyUsageService = jasmine.createSpyObj('UsageService', ['loadAllUsage', 'getAllUsage', 'saveUsage']);
+  const spyUsageService = jasmine.createSpyObj('UsageService', ['saveUsage', 'loadAllUsage', 'getAllUsage']);
   spyConfigurationService.getAllConfigurations.and.returnValue([]);
   spyUserService.getAllUsers.and.returnValue([]);
   spyUsageService.getAllUsage.and.returnValue([]);
@@ -40,7 +40,7 @@ describe('BootstrapService', () =>
 
   describe('constructor', () =>
   {
-    it('should call configuration service loadAllConfigurations method', inject([LoggingService, ConfigurationService, UsageService, UserService], (loggingService, configurationService, userService, usageService) =>
+    it('should call configuration service loadAllConfigurations method', inject([LoggingService, ConfigurationService, UsageService, UserService], (loggingService, configurationService, usageService, userService) =>
     {
       // Act
       const boostrapService = new BootstrapService(loggingService, configurationService, usageService, userService);
