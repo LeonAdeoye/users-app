@@ -48,7 +48,7 @@ export class BootstrapService
 
       // TODO remove this as it is used only for non-electron debugging from a normal browser when the ng serve command is used.
       if(this.configurationService.getAllConfigurations().length === 0)
-        this.configurationService.loadAllConfigurations()
+        this.configurationService.loadAllConfigurations();
 
       if(this.userService.getAllUsers().length === 0)
         this.userService.loadAllUsers();

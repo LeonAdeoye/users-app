@@ -15,7 +15,7 @@ export class PopupService
 
   constructor(private modalService: BsModalService) {}
 
-  show(titleToDisplay: string, messageToDisplay: string, ok?: boolean, cancel?: boolean, yes?: boolean, no?: boolean, isErrorPopupFlag?: boolean): Subject<Answer>
+  public show(titleToDisplay: string, messageToDisplay: string, ok?: boolean, cancel?: boolean, yes?: boolean, no?: boolean, isErrorPopupFlag?: boolean): Subject<Answer>
   {
     const initialState =
     {
@@ -30,7 +30,7 @@ export class PopupService
     return this.bsModalRef.content.answerSubject.pipe(take(1));
   }
 
-  showDeskUsage(deskName: string): Subject<Answer>
+  public showDeskUsage(deskName: string): Subject<Answer>
   {
     const initialState =
     {

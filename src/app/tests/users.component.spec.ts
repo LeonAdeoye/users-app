@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { UsersComponent } from "../components/users/users.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ConfigurationService } from "../services/configuration.service";
@@ -7,7 +6,7 @@ import { ConfigurationServiceMock } from "./mock-configuration.service";
 import { UserService } from "../services/user.service";
 import { UsageService } from "../services/usage.service";
 import { LoggingService } from "../services/logging.service";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("UsersComponent", () =>
 {
@@ -34,6 +33,10 @@ describe("UsersComponent", () =>
           { provide: UserService, useValue: spyUserService },
           { provide: UsageService, useValue: spyUsageService },
           { provide: LoggingService, useValue: spyLoggingService }
+        ],
+      schemas:
+        [
+          CUSTOM_ELEMENTS_SCHEMA
         ]
     })
     .compileComponents();

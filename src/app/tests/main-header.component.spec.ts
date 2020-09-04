@@ -6,6 +6,7 @@ import { LoggingService } from "../services/logging.service";
 import { GridSearchService } from "../services/grid-search.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ConfigurationServiceMock } from "./mock-configuration.service";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe('MainHeaderComponent', () =>
 {
@@ -31,6 +32,10 @@ describe('MainHeaderComponent', () =>
         { provide: ConfigurationService, useClass: ConfigurationServiceMock },
         { provide: LoggingService, useValue: spyLoggingService },
         { provide: GridSearchService, useValue: spyGridSearchService }
+      ],
+      schemas:
+      [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     })
     .compileComponents();

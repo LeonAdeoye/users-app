@@ -14,6 +14,8 @@ describe('BootstrapService', () =>
   const spyUserService = jasmine.createSpyObj('UserService', ['loadAllUsers', 'getAllUsers']);
   const spyUsageService = jasmine.createSpyObj('UsageService', ['loadAllUsage', 'getAllUsage', 'saveUsage']);
   spyConfigurationService.getAllConfigurations.and.returnValue([]);
+  spyUserService.getAllUsers.and.returnValue([]);
+  spyUsageService.getAllUsage.and.returnValue([]);
 
   beforeEach(() =>
   {
