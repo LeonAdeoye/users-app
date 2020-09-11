@@ -6,6 +6,8 @@ export class UserServiceMock
 {
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   public addUserSubject = new Subject<User>();
+  public editUserSubject = new Subject<User>();
+  public cloneUserSubject = new Subject<User>();
 
   public getAllUsers(): Array<User>
   {

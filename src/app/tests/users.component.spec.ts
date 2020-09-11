@@ -11,6 +11,7 @@ import { UserServiceMock } from "./mock-user.service";
 import { UsageServiceMock } from "./mock-usage.service";
 import { MatMenuModule  } from "@angular/material/menu";
 import { User } from "../models/user";
+import { Subject } from "rxjs";
 
 
 describe("UsersComponent", () =>
@@ -80,6 +81,16 @@ describe("UsersComponent", () =>
       component.cloneUser();
       // Assert
       expect(usageService.saveUsage).toHaveBeenCalled();
+    }));
+
+    it('should call getSelectedUser of the component', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(component, "getSelectedUser").and.returnValue(new User());
+      // Act
+      component.cloneUser();
+      // Assert
+      expect(component.getSelectedUser).toHaveBeenCalled();
     }));
   });
 
