@@ -5,6 +5,7 @@ import { User } from "../models/user";
 export class UserServiceMock
 {
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
+  public addUserSubject = new Subject<User>();
 
   public getAllUsers(): Array<User>
   {
@@ -12,6 +13,10 @@ export class UserServiceMock
   }
 
   public loadAllUsers(): void
+  {
+  }
+
+  public toggleValidity(user: User): void
   {
   }
 

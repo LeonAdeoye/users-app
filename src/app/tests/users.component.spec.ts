@@ -10,6 +10,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { UserServiceMock } from "./mock-user.service";
 import { UsageServiceMock } from "./mock-usage.service";
 import { MatMenuModule  } from "@angular/material/menu";
+import { User } from "../models/user";
 
 
 describe("UsersComponent", () =>
@@ -75,10 +76,52 @@ describe("UsersComponent", () =>
   {
     it('should call saveUsage of the usage service', inject([UsageService], (usageService) =>
     {
-      // Arrange
-      // spyOn(usageService, 'saveUsage');
       // Act
       component.cloneUser();
+      // Assert
+      expect(usageService.saveUsage).toHaveBeenCalled();
+    }));
+  });
+
+  describe('editUser', () =>
+  {
+    it('should call saveUsage of the usage service', inject([UsageService], (usageService) =>
+    {
+      // Act
+      component.editUser();
+      // Assert
+      expect(usageService.saveUsage).toHaveBeenCalled();
+    }));
+  });
+
+  describe('toggleValidity', () =>
+  {
+    it('should call toggleValidity of the user service', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(userService, "toggleValidity");
+      spyOn(component, "getSelectedUser").and.returnValue(new User());
+      // Act
+      component.toggleValidity();
+      // Assert
+      expect(userService.toggleValidity).toHaveBeenCalled();
+    }));
+
+    it('should call saveUsage of the usage service', inject([UsageService], (usageService) =>
+    {
+      // Act
+      component.toggleValidity();
+      // Assert
+      expect(usageService.saveUsage).toHaveBeenCalled();
+    }));
+  });
+
+  describe('addUser', () =>
+  {
+    it('should call saveUsage of the usage service', inject([UsageService], (usageService) =>
+    {
+      // Act
+      component.addUser();
       // Assert
       expect(usageService.saveUsage).toHaveBeenCalled();
     }));
