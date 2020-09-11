@@ -17,6 +17,7 @@ describe("UsersComponent", () =>
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
+  const spyUsageService = jasmine.createSpyObj('UsageService', ['saveUsage']);
 
   beforeEach(async(() =>
   {
@@ -34,7 +35,7 @@ describe("UsersComponent", () =>
         [
           { provide: ConfigurationService, useClass: ConfigurationServiceMock },
           { provide: UserService, useClass: UserServiceMock },
-          { provide: UsageService, useClass: UsageServiceMock },
+          { provide: UsageService, useValue: spyUsageService },
           { provide: LoggingService, useValue: spyLoggingService }
         ],
       schemas:
@@ -67,6 +68,19 @@ describe("UsersComponent", () =>
       component.refreshUsers();
       // Assert
       expect(userService.loadAllUsers).toHaveBeenCalled();
+    }));
+  });
+
+  describe('cloneUser', () =>
+  {
+    it('should call saveUsage of the usage service', inject([UsageService], (usageService) =>
+    {
+      // Arrange
+      // spyOn(usageService, 'saveUsage');
+      // Act
+      component.cloneUser();
+      // Assert
+      expect(usageService.saveUsage).toHaveBeenCalled();
     }));
   });
 });

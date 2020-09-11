@@ -10,4 +10,9 @@ export class UsageServiceMock
   {
       return[];
   }
+
+  public saveUSage(action: string): void
+  {
+
+  }
 }
