@@ -83,7 +83,7 @@ describe("UsersComponent", () =>
       expect(usageService.saveUsage).toHaveBeenCalled();
     }));
 
-    it('should call getSelectedUser of the component', inject([UserService], (userService) =>
+    it('should call getSelectedUser of the component', () =>
     {
       // Arrange
       spyOn(component, "getSelectedUser").and.returnValue(new User());
@@ -91,7 +91,7 @@ describe("UsersComponent", () =>
       component.cloneUser();
       // Assert
       expect(component.getSelectedUser).toHaveBeenCalled();
-    }));
+    });
   });
 
   describe('editUser', () =>
@@ -103,6 +103,16 @@ describe("UsersComponent", () =>
       // Assert
       expect(usageService.saveUsage).toHaveBeenCalled();
     }));
+
+    it('should call getSelectedUser of the component', () =>
+    {
+      // Arrange
+      spyOn(component, "getSelectedUser").and.returnValue(new User());
+      // Act
+      component.editUser();
+      // Assert
+      expect(component.getSelectedUser).toHaveBeenCalled();
+    });
   });
 
   describe('toggleValidity', () =>
