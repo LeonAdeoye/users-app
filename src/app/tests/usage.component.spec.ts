@@ -7,9 +7,9 @@ import { UserService } from "../services/user.service";
 import { UsageService } from "../services/usage.service";
 import { LoggingService } from "../services/logging.service";
 import { PopupService } from "../services/popup.service";
-import { UsageServiceMock } from "./mock-usage.service";
 import { UserServiceMock } from "./mock-user.service";
 import { MatMenuModule } from "@angular/material/menu";
+import { UsageServiceMock } from "./mock-usage.service";
 
 describe("UsageComponent", () =>
 {
@@ -56,4 +56,5 @@ describe("UsageComponent", () =>
   {
     expect(component).toBeTruthy();
   });
+
 });

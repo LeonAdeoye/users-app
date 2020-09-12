@@ -113,6 +113,16 @@ describe("UsersComponent", () =>
       // Assert
       expect(component.getSelectedUser).toHaveBeenCalled();
     });
+
+    it('should call editUserSubject of the user service', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(userService.editUserSubject, "next");
+      // Act
+      component.editUser();
+      // Assert
+      expect(userService.editUserSubject.next).toHaveBeenCalled();
+    }));
   });
 
   describe('toggleValidity', () =>
