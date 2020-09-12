@@ -92,6 +92,17 @@ describe("UsersComponent", () =>
       // Assert
       expect(component.getSelectedUser).toHaveBeenCalled();
     });
+
+    it('should call cloneUserSubject of the user service', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(userService.cloneUserSubject, "next");
+      spyOn(component,"getSelectedUser").and.returnValue(new User());
+      // Act
+      component.cloneUser();
+      // Assert
+      expect(userService.cloneUserSubject.next).toHaveBeenCalled();
+    }));
   });
 
   describe('editUser', () =>
@@ -118,6 +129,7 @@ describe("UsersComponent", () =>
     {
       // Arrange
       spyOn(userService.editUserSubject, "next");
+      spyOn(component,"getSelectedUser").and.returnValue(new User());
       // Act
       component.editUser();
       // Assert
@@ -155,6 +167,16 @@ describe("UsersComponent", () =>
       component.addUser();
       // Assert
       expect(usageService.saveUsage).toHaveBeenCalled();
+    }));
+
+    it('should call next of the user service addUserSubject', inject([UserService], (userService) =>
+    {
+      // Arrange
+      spyOn(userService.addUserSubject, "next");
+      // Act
+      component.addUser();
+      // Assert
+      expect(userService.addUserSubject.next).toHaveBeenCalled();
     }));
   });
 });
