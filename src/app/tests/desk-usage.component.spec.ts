@@ -12,7 +12,7 @@ describe('DeskUsageComponent', () => {
   const spyUserService = jasmine.createSpyObj('UserService', ['getUniqueDesks', 'getAllUsers']);
   const spyUsageService = jasmine.createSpyObj('UsageService', ['getUsageApps']);
   const spyBsModalRef = jasmine.createSpyObj('BsModalRef', ['hide']);
-  spyUsageService.getUsageApps.and.returnValue([]);
+  spyUsageService.getUsageApps.and.returnValue(['app1',  'app2']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,5 +42,18 @@ describe('DeskUsageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('getColumnsDefinitions', () =>
+  {
+    it('should return column header details', () =>
+    {
+      // Act
+      const result = component.getColumnsDefinitions();
+      // Assert
+      expect(result[0]).toEqual(jasmine.objectContaining({ headerName: 'user', field: 'user', sortable: true, minWidth: 130, width: 130 }));
+      expect(result[1]).toEqual(jasmine.objectContaining({ headerName: 'app1', field: 'app1', sortable: true, minWidth: 160, width: 160 }));
+      expect(result[2]).toEqual(jasmine.objectContaining({ headerName: 'app2', field: 'app2', sortable: true, minWidth: 160, width: 160 }));
+    });
   });
 });
